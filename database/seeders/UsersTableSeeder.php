@@ -35,10 +35,10 @@ class UsersTableSeeder extends Seeder
 
             //instansi
             [
-                'name' =>  'instansi',
-                'email' => 'istansi@gmail.com',
+                'name' =>  'admin',
+                'email' => 'admin@gmail.com',
                 'password' => Hash::make('adminadmin'),
-                'role' => 'instansi',
+                'role' => 'admin',
             ]
         ]);
     }
