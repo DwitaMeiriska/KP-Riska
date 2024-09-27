@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('surats', function (Blueprint $table) {
             $table->id('id_surat'); // Primary key id_surat
+            $table->string('user_id');
             $table->string('kode_surat', 50); // Kolom kode_surat
             $table->date('tanggal_surat'); // Kolom tanggal_surat
             $table->string('no_surat', 100); // Kolom no_surat
