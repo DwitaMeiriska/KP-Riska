@@ -52,6 +52,7 @@ Route::middleware(['auth','role:kelas'])->group(function () {
 Route::middleware(['auth','role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/template', [AdminController::class, 'index'])->name('admin.template');
+    Route::get('/admin/tambahmasuk', [AdminController::class, 'tambahMasuk'])->name('admin.tambahmasuk');
 });
 
 

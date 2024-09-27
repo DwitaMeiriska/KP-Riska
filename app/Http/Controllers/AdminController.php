@@ -16,7 +16,9 @@ class AdminController extends Controller
     {
         return view('admin/adminDashboard');
     }
-
+    public function tambahMasuk(){
+        return view('admin.tambahMasuk');
+    }
     /**
      * Show the form for creating a new resource.
      */
