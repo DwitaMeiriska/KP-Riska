@@ -2,13 +2,28 @@
 @section('content')
     <section class="content">
         <div class="container-fluid">
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-alert">
+                    {{ session('success') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <script>
+                    // Setelah 5 detik, alert akan otomatis menghilang
+                    setTimeout(function() {
+                        $('#success-alert').alert('close');
+                    }, 5000); // 5000ms = 5 detik
+                </script>
+            @endif
+
             <div class="row">
                 <div class="col-lg-3 col-6">
-
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>150</h3>
-                            <p>New Orders</p>
+                            <h3>{{ $totalSurat }}</h3>
+                            <p>Total Surat</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
@@ -18,11 +33,10 @@
                 </div>
 
                 <div class="col-lg-3 col-6">
-
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>53<sup style="font-size: 20px">%</sup></h3>
-                            <p>Bounce Rate</p>
+                            <h3>{{ $totalSuratMasuk }}</h3>
+                            <p>Total Surat masuk</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
@@ -32,11 +46,10 @@
                 </div>
 
                 <div class="col-lg-3 col-6">
-
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>44</h3>
-                            <p>User Registrations</p>
+                            <h3>{{ $latestMasuk->tanggal_surat ?? 'N/A' }}</h3>
+                            <p>Tanggal Surat Masuk Terbaru</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
@@ -44,13 +57,11 @@
                         <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-6">
-
                     <div class="small-box bg-danger">
                         <div class="inner">
-                            <h3>65</h3>
-                            <p>Unique Visitors</p>
+                            <h3>{{ $oldestMasuk->tanggal_surat ?? 'N/A' }}</h3>
+                            <p>Tanggal Surat Masuk Terlama</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-pie-graph"></i>
@@ -58,13 +69,13 @@
                         <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-
             </div>
+
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">
-                            <a href="#"><button class="btn btn-primary">Tambah +</button></a>
+                            <a href="{{ Route('admin.tambahmasuk') }}"><button class="btn btn-primary">Tambah +</button></a>
                         </h3>
                     </div>
 
@@ -104,82 +115,76 @@
                                             <tr>
                                                 <th class="sorting sorting_asc" tabindex="0" aria-controls="example1"
                                                     rowspan="1" colspan="1"
-                                                    aria-label="Rendering engine: activate to sort column descending"
-                                                    aria-sort="ascending">Rendering engine</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                                    colspan="1" aria-label="Browser: activate to sort column ascending">
-                                                    Browser</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                                    colspan="1"
-                                                    aria-label="Platform(s): activate to sort column ascending">Platform(s)
+                                                    aria-label="ID Surat: activate to sort column descending"
+                                                    aria-sort="ascending">ID Surat</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1"
+                                                    rowspan="1" colspan="1"
+                                                    aria-label="Kode Surat: activate to sort column ascending">Kode Surat
                                                 </th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1"
                                                     rowspan="1" colspan="1"
-                                                    aria-label="Engine version: activate to sort column ascending">Engine
-                                                    version</th>
+                                                    aria-label="User: activate to sort column ascending">User
+                                                </th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1"
                                                     rowspan="1" colspan="1"
-                                                    aria-label="CSS grade: activate to sort column ascending">CSS grade
-                                                </th>
+                                                    aria-label="Tanggal Surat: activate to sort column ascending">Tanggal
+                                                    Surat</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1"
+                                                    rowspan="1" colspan="1"
+                                                    aria-label="No Surat: activate to sort column ascending">No Surat</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1"
+                                                    rowspan="1" colspan="1"
+                                                    aria-label="Status: activate to sort column ascending">Status</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1"
+                                                    rowspan="1" colspan="1"
+                                                    aria-label="File: activate to sort column ascending">File</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="odd">
-                                                <td class="dtr-control sorting_1" tabindex="0">Gecko</td>
-                                                <td>Firefox 1.0</td>
-                                                <td>Win 98+ / OSX.2+</td>
-                                                <td>1.7</td>
-                                                <td>A</td>
-                                            </tr>
+                                            @foreach ($data as $surat)
+                                                <tr>
+                                                    <td>{{ $surat->id_surat }}</td>
+                                                    <td>{{ $surat->kode_surat }}</td>
+                                                    {{-- <td>{{ $surat->user_id }}</td> --}}
+                                                    <td>{{ $surat->user->name ?? 'Tidak ada pengguna' }}</td>
+                                                    <td>{{ $surat->tanggal_surat }}</td>
+                                                    <td>{{ $surat->no_surat }}</td>
+                                                    <td>{{ $surat->status }}</td>
+                                                    <td><a href="{{ route('surat.lihat', $surat->id_surat) }}">
+                                                        <button class="btn btn-sm btn-primary">Lihat</button>
+                                                    </a></td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th rowspan="1" colspan="1">Rendering engine</th>
-                                                <th rowspan="1" colspan="1">Browser</th>
-                                                <th rowspan="1" colspan="1">Platform(s)</th>
-                                                <th rowspan="1" colspan="1">Engine version</th>
-                                                <th rowspan="1" colspan="1">CSS grade</th>
+                                                <th rowspan="1" colspan="1">ID Surat</th>
+                                                <th rowspan="1" colspan="1">Kode Surat</th>
+                                                <th rowspan="1" colspan="1">User</th>
+                                                <th rowspan="1" colspan="1">Tanggal Surat</th>
+                                                <th rowspan="1" colspan="1">No Surat</th>
+                                                <th rowspan="1" colspan="1">Status</th>
+                                                <th rowspan="1" colspan="1">File</th>
                                             </tr>
                                         </tfoot>
                                     </table>
                                 </div>
                             </div>
+
                             <div class="row">
                                 <div class="col-sm-12 col-md-5">
                                     <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">
-                                        Showing 1 to 10 of 57 entries</div>
+                                        Menampilkan {{ $data->firstItem() }} sampai {{ $data->lastItem() }} dari total
+                                        {{ $data->total() }} surat
+                                    </div>
                                 </div>
                                 <div class="col-sm-12 col-md-7">
                                     <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
-                                        <ul class="pagination">
-                                            <li class="paginate_button page-item previous disabled"
-                                                id="example1_previous"><a href="#" aria-controls="example1"
-                                                    data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
-                                            <li class="paginate_button page-item active"><a href="#"
-                                                    aria-controls="example1" data-dt-idx="1" tabindex="0"
-                                                    class="page-link">1</a></li>
-                                            <li class="paginate_button page-item "><a href="#"
-                                                    aria-controls="example1" data-dt-idx="2" tabindex="0"
-                                                    class="page-link">2</a></li>
-                                            <li class="paginate_button page-item "><a href="#"
-                                                    aria-controls="example1" data-dt-idx="3" tabindex="0"
-                                                    class="page-link">3</a></li>
-                                            <li class="paginate_button page-item "><a href="#"
-                                                    aria-controls="example1" data-dt-idx="4" tabindex="0"
-                                                    class="page-link">4</a></li>
-                                            <li class="paginate_button page-item "><a href="#"
-                                                    aria-controls="example1" data-dt-idx="5" tabindex="0"
-                                                    class="page-link">5</a></li>
-                                            <li class="paginate_button page-item "><a href="#"
-                                                    aria-controls="example1" data-dt-idx="6" tabindex="0"
-                                                    class="page-link">6</a></li>
-                                            <li class="paginate_button page-item next" id="example1_next"><a
-                                                    href="#" aria-controls="example1" data-dt-idx="7"
-                                                    tabindex="0" class="page-link">Next</a></li>
-                                        </ul>
+                                        {{ $data->links() }}
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
 

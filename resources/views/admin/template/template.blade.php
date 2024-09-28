@@ -86,10 +86,18 @@
                                         <p>Dashboard v3</p>
                                     </a> </li>
                             </ul> --}}
+                            <li class="nav-item"> <a href='#' class="nav-link"> <i
+                                        class="nav-icon bi bi-envelope"></i>
+                                    <p>Dashboard</p>
+                                </a> </li>
                         </li>
-                        <li class="nav-item"> <a href="./generate/theme.html" class="nav-link"> <i
+                        <li class="nav-item"> <a href={{ route('admin.template') }} class="nav-link"> <i
                                     class="nav-icon bi bi-envelope"></i>
                                 <p>Surat Masuk</p>
+                            </a> </li>
+                        <li class="nav-item"> <a href='#' class="nav-link"> <i
+                                    class="nav-icon bi bi-envelope"></i>
+                                <p>Surat keluar</p>
                             </a> </li>
                         {{-- <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-box-seam-fill"></i>
                                 <p>
