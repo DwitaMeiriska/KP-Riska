@@ -15,14 +15,33 @@ class AdminController extends Controller
     {
         return view('admin.dashboard');
     }
+
+    public function getAllSurat(){
+        $totalSurat = Surat::count(); // Total surat
+        // $totalSuratMasuk = Surat::where('status', 'masuk')->count(); // Total surat keluar
+        $latest = Surat::where('status', 'masuk')->orderBy('tanggal_surat', 'desc')->first(); // Tanggal surat masuk terbaru
+        $oldest = Surat::where('status', 'masuk')->orderBy('tanggal_surat', 'asc')->first(); // Tanggal surat masuk terlama
+        $data = Surat::paginate(10);
+        return view('admin/dashboard', compact('data', 'totalSurat', 'latest', 'oldest'));
+    }
     public function index()
     {
         $totalSurat = Surat::count(); // Total surat
         $totalSuratMasuk = Surat::where('status', 'masuk')->count(); // Total surat keluar
         $latestMasuk = Surat::where('status', 'masuk')->orderBy('tanggal_surat', 'desc')->first(); // Tanggal surat masuk terbaru
         $oldestMasuk = Surat::where('status', 'masuk')->orderBy('tanggal_surat', 'asc')->first(); // Tanggal surat masuk terlama
-        $data = Surat::paginate(10);
+        $data = Surat::where('status', 'masuk')->paginate(10);
         return view('admin/adminDashboard', compact('data', 'totalSurat', 'totalSuratMasuk', 'latestMasuk', 'oldestMasuk'));
+    }
+
+    public function suratKeluar()
+    {
+        $totalSurat = Surat::count(); // Total surat
+        $totalSuratKeluar = Surat::where('status', 'keluar')->count(); // Total surat keluar
+        $latestKeluar = Surat::where('status', 'keluar')->orderBy('tanggal_surat', 'desc')->first(); // Tanggal surat masuk terbaru
+        $oldestKeluar = Surat::where('status', 'keluar')->orderBy('tanggal_surat', 'asc')->first(); // Tanggal surat masuk terlama
+        $data = Surat::where('status', 'keluar')->paginate(10);
+        return view('admin/suratKeluar', compact('data', 'totalSurat', 'totalSuratKeluar', 'latestKeluar', 'oldestKeluar'));
     }
     public function tambahMasuk()
     {

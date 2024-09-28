@@ -52,7 +52,10 @@ Route::middleware(['auth', 'role:kelas'])->group(function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/template', [AdminController::class, 'index'])->name('admin.template');
+    Route::get('/admin/keluar', [AdminController::class, 'suratKeluar'])->name('admin.keluar');
+    Route::get('/admin/allsurat', [AdminController::class, 'getAllSurat'])->name('admin.allSurat');
     Route::get('/admin/tambahmasuk', [AdminController::class, 'tambahMasuk'])->name('admin.tambahmasuk');
+    Route::get('/admin/tambahkeluar', [AdminController::class, 'tambahKeluar'])->name('admin.tambahkeluar');
     Route::post('surats', [AdminController::class, 'store'])->name('surats.store');
     Route::get('/surat/{id}/lihat', [AdminController::class, 'lihat'])->name('surat.lihat');
 });
