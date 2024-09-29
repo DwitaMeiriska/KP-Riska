@@ -75,7 +75,8 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">
-                            <a href="{{ Route('admin.tambahkeluar') }}"><button class="btn btn-primary">Tambah +</button></a>
+                            <a href="{{ Route('admin.tambahkeluar') }}"><button class="btn btn-primary">Tambah
+                                    +</button></a>
                         </h3>
                     </div>
 
@@ -123,6 +124,10 @@
                                                 </th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1"
                                                     rowspan="1" colspan="1"
+                                                    aria-label="Tujuan: activate to sort column ascending">Tujuan
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1"
+                                                    rowspan="1" colspan="1"
                                                     aria-label="User: activate to sort column ascending">User
                                                 </th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1"
@@ -138,6 +143,10 @@
                                                 <th class="sorting" tabindex="0" aria-controls="example1"
                                                     rowspan="1" colspan="1"
                                                     aria-label="File: activate to sort column ascending">File</th>
+
+                                                <th class="sorting" tabindex="0" aria-controls="example1"
+                                                    rowspan="1" colspan="1"
+                                                    aria-label="Aksi: activate to sort column ascending">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -145,14 +154,25 @@
                                                 <tr>
                                                     <td>{{ $surat->id_surat }}</td>
                                                     <td>{{ $surat->kode_surat }}</td>
-                                                    {{-- <td>{{ $surat->user_id }}</td> --}}
+                                                    <td>{{ $surat->tujuan}}</td>
                                                     <td>{{ $surat->user->name ?? 'Tidak ada pengguna' }}</td>
                                                     <td>{{ $surat->tanggal_surat }}</td>
                                                     <td>{{ $surat->no_surat }}</td>
                                                     <td>{{ $surat->status }}</td>
                                                     <td><a href="{{ route('surat.lihat', $surat->id_surat) }}">
-                                                        <button class="btn btn-sm btn-primary">Lihat</button>
-                                                    </a></td>
+                                                            <button class="btn btn-sm btn-primary">Lihat</button>
+                                                        </a></td>
+                                                    <td>
+                                                        <a href="{{ route('surat.edit', $surat->id_surat) }}"
+                                                            class="btn btn-sm btn-warning">Edit</a>
+                                                        <form action="{{ route('surat.delete', $surat->id_surat) }}"
+                                                            method="POST" style="display:inline;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-sm btn-danger"
+                                                                onclick="return confirm('Apakah Anda yakin ingin menghapus surat ini?')">Delete</button>
+                                                        </form>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -160,11 +180,13 @@
                                             <tr>
                                                 <th rowspan="1" colspan="1">ID Surat</th>
                                                 <th rowspan="1" colspan="1">Kode Surat</th>
+                                                <th rowspan="1" colspan="1">Tujuan</th>
                                                 <th rowspan="1" colspan="1">User</th>
                                                 <th rowspan="1" colspan="1">Tanggal Surat</th>
                                                 <th rowspan="1" colspan="1">No Surat</th>
                                                 <th rowspan="1" colspan="1">Status</th>
                                                 <th rowspan="1" colspan="1">File</th>
+                                                <th rowspan="1" colspan="1">Aksi</th>
                                             </tr>
                                         </tfoot>
                                     </table>

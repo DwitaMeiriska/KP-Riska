@@ -15,6 +15,10 @@
                     <td>{{ $surat->kode_surat }}</td>
                 </tr>
                 <tr>
+                    <th>Tujuan</th>
+                    <td>{{ $surat->tujuan }}</td>
+                </tr>
+                <tr>
                     <th>Nama Pengguna</th>
                     <td>{{ $surat->user->name ?? 'Tidak ada pengguna' }}</td>
                 </tr>
@@ -37,7 +41,12 @@
                     </td>
                 </tr>
             </table>
-            <a href="{{ route('admin.template') }}" class="btn btn-secondary">Kembali</a>
+            @if($surat->status == "masuk")
+                <a href="{{ route('admin.template') }}" class="btn btn-secondary">Kembali</a>
+            @elseif($surat->status == "keluar")
+                <a href="{{ route('admin.keluar') }}" class="btn btn-secondary">Kembali</a>
+            @endif
+
         </div>
     </div>
 </div>

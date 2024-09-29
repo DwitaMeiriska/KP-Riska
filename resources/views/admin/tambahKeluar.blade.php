@@ -5,10 +5,10 @@
             <div class="card card-primary">
                 <button class="btn btn-lg btn-primary col-lg-6 p-3 mt-3" ><h1>Tambah Surat</h1></button>
                 <div class="card-header mt-3">
-                    <h3 class="card-title">Tambah Surat Baru</h3>
+                    <h3 class="card-title">Tambah Surat Keluar</h3>
                 </div>
                 <!-- form start -->
-                <form action="{{ route('surats.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('suratskeluar.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
@@ -28,9 +28,10 @@
                             <input type="text" class="form-control" id="kode_surat" name="kode_surat" placeholder="Masukkan kode surat" required>
                         </div>
                         <div class="form-group">
-                            <label for="tujuan">Tujuan</label>
-                            <input type="text" class="form-control" id="tujuan" name="tujuan" placeholder="Masukkan kode surat" required>
+                            <label for="kode_surat">Tujuan</label>
+                            <input type="text" class="form-control" id="kode_surat" name="tujuan" placeholder="Masukkan kode surat" required>
                         </div>
+
                         <!-- Tanggal Surat -->
                         <div class="form-group">
                             <label for="tanggal_surat">Tanggal Surat</label>

@@ -48,6 +48,11 @@ class AdminController extends Controller
 
         return view('admin.tambahMasuk');
     }
+    public function tambahKeluar()
+    {
+
+        return view('admin.tambahKeluar');
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -67,6 +72,7 @@ class AdminController extends Controller
         $request->validate([
             'user_id' => 'required|exists:users,id',
             'kode_surat' => 'required|string|max:50',
+            // 'tujuan' => 'required|string|max:50',
             'tanggal_surat' => 'required|date',
             'no_surat' => 'required|string|max:100',
             'file_surat' => 'required|file|mimes:pdf,doc,docx', // Tipe file yang diizinkan
@@ -85,6 +91,7 @@ class AdminController extends Controller
         Surat::create([
             'user_id' => $request->user_id,
             'kode_surat' => $request->kode_surat,
+            'tujuan' => $request->tujuan,
             'tanggal_surat' => $request->tanggal_surat,
             'no_surat' => $request->no_surat,
             'file_surat' => 'surat_files/' . $fileName, // Simpan path file yang diupload
@@ -93,6 +100,41 @@ class AdminController extends Controller
 
         // Redirect setelah berhasil disimpan
         return redirect()->route('admin.template')->with('success', 'Surat berhasil ditambahkan');
+    }
+    public function storekeluar(Request $request)
+    {
+        // Validasi data input
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'kode_surat' => 'required|string|max:50',
+            'tujuan' => 'required|string|max:50',
+            'tanggal_surat' => 'required|date',
+            'no_surat' => 'required|string|max:100',
+            'file_surat' => 'required|file|mimes:pdf,doc,docx', // Tipe file yang diizinkan
+        ]);
+
+        // Dapatkan informasi file yang diunggah
+        $file = $request->file('file_surat');
+
+        // Buat nama file unik
+        $fileName = 'surat_' . time() . '_' . Str::slug($request->kode_surat) . '.' . $file->getClientOriginalExtension();
+
+        // Simpan file surat dan dapatkan path
+        $fileSuratPath = $file->move(public_path('surat_files'), $fileName);
+
+        // Buat surat baru
+        Surat::create([
+            'user_id' => $request->user_id,
+            'kode_surat' => $request->kode_surat,
+            'tujuan' => $request->tujuan,
+            'tanggal_surat' => $request->tanggal_surat,
+            'no_surat' => $request->no_surat,
+            'file_surat' => 'surat_files/' . $fileName, // Simpan path file yang diupload
+            'status' => "keluar",
+        ]);
+
+        // Redirect setelah berhasil disimpan
+        return redirect()->route('admin.keluar')->with('success', 'Surat berhasil ditambahkan');
     }
 
     public function lihat($id)
@@ -110,24 +152,98 @@ class AdminController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        // Ambil surat berdasarkan ID
+        $surat = Surat::find($id);
+
+        // Pastikan surat ditemukan
+        if (!$surat) {
+            return redirect()->route('admin.allSurat')->with('error', 'Surat tidak ditemukan');
+        }
+
+        // Kembalikan view dengan data surat
+        return view('admin.edit', compact('surat'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        // Validasi data input
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'kode_surat' => 'required|string|max:50',
+            'tujuan' => 'required|string|max:50',
+            'tanggal_surat' => 'required|date',
+            'no_surat' => 'required|string|max:100',
+            'file_surat' => 'nullable|file|mimes:pdf,doc,docx', // File tidak wajib di-update
+        ]);
+
+        // Temukan surat berdasarkan ID
+        $surat = Surat::find($id);
+
+        if (!$surat) {
+            return redirect()->route('admin.allSurat')->with('error', 'Surat tidak ditemukan');
+        }
+
+        // Jika ada file yang diunggah
+        if ($request->hasFile('file_surat')) {
+            // Hapus file lama jika ada
+            if ($surat->file_surat && file_exists(public_path($surat->file_surat))) {
+                unlink(public_path($surat->file_surat));
+            }
+
+            // Dapatkan informasi file yang diunggah
+            $file = $request->file('file_surat');
+
+            // Buat nama file unik
+            $fileName = 'surat_' . time() . '_' . Str::slug($request->kode_surat) . '.' . $file->getClientOriginalExtension();
+
+            // Simpan file surat
+            $file->move(public_path('surat_files'), $fileName);
+
+            // Update path file
+            $surat->file_surat = 'surat_files/' . $fileName;
+        }
+
+        // Update data surat
+        $surat->update([
+            'user_id' => $request->user_id,
+            'kode_surat' => $request->kode_surat,
+            'tujuan' => $request->tujuan,
+            'tanggal_surat' => $request->tanggal_surat,
+            'no_surat' => $request->no_surat,
+            // 'status' => $request->status,
+        ]);
+
+        // Redirect setelah berhasil di-update
+        if($surat->status == 'keluar'){
+            return redirect()->route('admin.keluar')->with('success', 'Surat keluar berhasil diperbarui');
+        }elseif($surat->status == 'masuk'){
+            return redirect()->route('admin.template')->with('success', 'Surat masuk berhasil diperbarui');
+        }else{
+            return redirect()->route('admin.allSurat')->with('success', 'Surat berhasil diperbarui');
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        // Temukan surat berdasarkan ID
+        $surat = Surat::where('id_surat', $id)->first();
+        // dd($id);
+        if (!$surat) {
+            return redirect()->route('admin.allSurat')->with('error', 'Surat tidak ditemukan');
+        }
+
+        // Hapus file yang terkait jika ada
+        if ($surat->file_surat && file_exists(public_path($surat->file_surat))) {
+            unlink(public_path($surat->file_surat));
+        }
+
+        // Hapus surat dari database
+        $surat->delete();
+
+        // Redirect setelah berhasil dihapus
+        return redirect()->route('admin.allSurat')->with('success', 'Surat berhasil dihapus');
     }
+
 }
