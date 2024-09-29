@@ -1,4 +1,4 @@
-@extends('admin.template.template')
+@extends('guru.template.template')
 @section('content')
     <section class="content">
         <div class="container-fluid">
@@ -35,8 +35,8 @@
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>{{ $totalSuratKeluar }}</h3>
-                            <p>Total Surat Keluar</p>
+                            <h3>{{ $totalSuratMasuk }}</h3>
+                            <p>Total Surat masuk</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
@@ -48,8 +48,8 @@
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>{{ $latestKeluar->tanggal_surat ?? 'N/A' }}</h3>
-                            <p>Tanggal Surat Keluar Terbaru</p>
+                            <h3>{{ $latestMasuk->tanggal_surat ?? 'N/A' }}</h3>
+                            <p>Tanggal Surat Masuk Terbaru</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
@@ -60,8 +60,8 @@
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-danger">
                         <div class="inner">
-                            <h3>{{ $oldestKeluar->tanggal_surat ?? 'N/A' }}</h3>
-                            <p>Tanggal Surat Keluar Terlama</p>
+                            <h3>{{ $oldestMasuk->tanggal_surat ?? 'N/A' }}</h3>
+                            <p>Tanggal Surat Masuk Terlama</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-pie-graph"></i>
@@ -73,12 +73,11 @@
 
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
+                    {{-- <div class="card-header">
                         <h3 class="card-title">
-                            <a href="{{ Route('admin.tambahkeluar') }}"><button class="btn btn-primary">Tambah
-                                    +</button></a>
+                            <a href="{{ Route('admin.tambahmasuk') }}"><button class="btn btn-primary">Tambah +</button></a>
                         </h3>
-                    </div>
+                    </div> --}}
 
                     <div class="card-body">
                         <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
@@ -132,7 +131,7 @@
                                                 </th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1"
                                                     rowspan="1" colspan="1"
-                                                    aria-label="Tujuan: activate to sort column ascending">Pengirim
+                                                    aria-label="Pengirim: activate to sort column ascending">Pengirim
                                                 </th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1"
                                                     rowspan="1" colspan="1"
@@ -154,10 +153,9 @@
                                                 <th class="sorting" tabindex="0" aria-controls="example1"
                                                     rowspan="1" colspan="1"
                                                     aria-label="File: activate to sort column ascending">File</th>
-
-                                                <th class="sorting" tabindex="0" aria-controls="example1"
+                                                {{-- <th class="sorting" tabindex="0" aria-controls="example1"
                                                     rowspan="1" colspan="1"
-                                                    aria-label="Aksi: activate to sort column ascending">Aksi</th>
+                                                    aria-label="Aksi: activate to sort column ascending">Aksi</th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -166,8 +164,8 @@
                                                     {{-- <td>{{ $surat->id_surat }}</td> --}}
                                                     <td>{{ $surat->kode_surat }}</td>
                                                     <td>{{ $surat->judul }}</td>
-                                                    <td>{{ $surat->tujuan}}</td>
-                                                    <td>{{ $surat->pengirim}}</td>
+                                                    <td>{{ $surat->tujuan }}</td>
+                                                    <td>{{ $surat->pengirim }}</td>
                                                     <td>{{ $surat->user->name ?? 'Tidak ada pengguna' }}</td>
                                                     <td>{{ $surat->tanggal_surat }}</td>
                                                     <td>{{ $surat->no_surat }}</td>
@@ -176,7 +174,7 @@
                                                     <td><a href="{{ route('surat.lihat', $surat->id_surat) }}">
                                                             <button class="btn btn-sm btn-primary">Lihat</button>
                                                         </a></td>
-                                                    <td>
+                                                    {{-- <td>
                                                         <a href="{{ route('surat.edit', $surat->id_surat) }}"
                                                             class="btn btn-sm btn-warning">Edit</a>
                                                         <form action="{{ route('surat.delete', $surat->id_surat) }}"
@@ -186,7 +184,7 @@
                                                             <button type="submit" class="btn btn-sm btn-danger"
                                                                 onclick="return confirm('Apakah Anda yakin ingin menghapus surat ini?')">Delete</button>
                                                         </form>
-                                                    </td>
+                                                    </td> --}}
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -203,7 +201,7 @@
                                                 <th rowspan="1" colspan="1">Status</th>
                                                 <th rowspan="1" colspan="1">Jenis Surat</th>
                                                 <th rowspan="1" colspan="1">File</th>
-                                                <th rowspan="1" colspan="1">Aksi</th>
+                                                {{-- <th rowspan="1" colspan="1">Aksi</th> --}}
                                             </tr>
                                         </tfoot>
                                     </table>

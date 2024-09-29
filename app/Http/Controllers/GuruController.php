@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Surat;
 use Illuminate\Http\Request;
 
 class GuruController extends Controller
@@ -11,11 +12,17 @@ class GuruController extends Controller
      */
 
      public function dashboard(){
-        return view('guru.dashboard');
+        return view('guru.template.template');
       }
     public function index()
     {
-        //
+        $totalSurat = Surat::count(); // Total surat
+        $totalSuratMasuk = Surat::where('status', 'masuk')->count(); // Total surat keluar
+        $latestMasuk = Surat::where('status', 'masuk')->orderBy('tanggal_surat', 'desc')->first(); // Tanggal surat masuk terbaru
+        $oldestMasuk = Surat::where('status', 'masuk')->orderBy('tanggal_surat', 'asc')->first(); // Tanggal surat masuk terlama
+        $data = Surat::where('status', 'masuk')->paginate(10);
+        return view('guru/suratMasuk', compact('data', 'totalSurat', 'totalSuratMasuk', 'latestMasuk', 'oldestMasuk'));
+
     }
 
     /**

@@ -113,17 +113,25 @@
                                         aria-describedby="example1_info">
                                         <thead>
                                             <tr>
-                                                <th class="sorting sorting_asc" tabindex="0" aria-controls="example1"
+                                                {{-- <th class="sorting sorting_asc" tabindex="0" aria-controls="example1"
                                                     rowspan="1" colspan="1"
                                                     aria-label="ID Surat: activate to sort column descending"
-                                                    aria-sort="ascending">ID Surat</th>
+                                                    aria-sort="ascending">ID Surat</th> --}}
                                                 <th class="sorting" tabindex="0" aria-controls="example1"
                                                     rowspan="1" colspan="1"
                                                     aria-label="Kode Surat: activate to sort column ascending">Kode Surat
                                                 </th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1"
                                                     rowspan="1" colspan="1"
+                                                    aria-label="Judul: activate to sort column ascending">Judul
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1"
+                                                    rowspan="1" colspan="1"
                                                     aria-label="Tujuan: activate to sort column ascending">Tujuan
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1"
+                                                    rowspan="1" colspan="1"
+                                                    aria-label="Pengirim: activate to sort column ascending">Pengirim
                                                 </th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1"
                                                     rowspan="1" colspan="1"
@@ -141,6 +149,9 @@
                                                     aria-label="Status: activate to sort column ascending">Status</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1"
                                                     rowspan="1" colspan="1"
+                                                    aria-label="Jenis Surat: activate to sort column ascending">Jenis Surat</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1"
+                                                    rowspan="1" colspan="1"
                                                     aria-label="File: activate to sort column ascending">File</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1"
                                                     rowspan="1" colspan="1"
@@ -150,13 +161,16 @@
                                         <tbody>
                                             @foreach ($data as $surat)
                                                 <tr>
-                                                    <td>{{ $surat->id_surat }}</td>
+                                                    {{-- <td>{{ $surat->id_surat }}</td> --}}
                                                     <td>{{ $surat->kode_surat }}</td>
+                                                    <td>{{ $surat->judul }}</td>
                                                     <td>{{ $surat->tujuan }}</td>
+                                                    <td>{{ $surat->pengirim }}</td>
                                                     <td>{{ $surat->user->name ?? 'Tidak ada pengguna' }}</td>
                                                     <td>{{ $surat->tanggal_surat }}</td>
                                                     <td>{{ $surat->no_surat }}</td>
                                                     <td>{{ $surat->status }}</td>
+                                                    <td>{{ $surat->jenis_surat }}</td>
                                                     <td><a href="{{ route('surat.lihat', $surat->id_surat) }}">
                                                             <button class="btn btn-sm btn-primary">Lihat</button>
                                                         </a></td>
@@ -176,13 +190,16 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th rowspan="1" colspan="1">ID Surat</th>
+                                                {{-- <th rowspan="1" colspan="1">ID Surat</th> --}}
                                                 <th rowspan="1" colspan="1">Kode Surat</th>
+                                                <th rowspan="1" colspan="1">Judul</th>
                                                 <th rowspan="1" colspan="1">Tujuan</th>
+                                                <th rowspan="1" colspan="1">Pengirim</th>
                                                 <th rowspan="1" colspan="1">User</th>
                                                 <th rowspan="1" colspan="1">Tanggal Surat</th>
                                                 <th rowspan="1" colspan="1">No Surat</th>
                                                 <th rowspan="1" colspan="1">Status</th>
+                                                <th rowspan="1" colspan="1">Jenis Surat</th>
                                                 <th rowspan="1" colspan="1">File</th>
                                                 <th rowspan="1" colspan="1">Aksi</th>
                                             </tr>

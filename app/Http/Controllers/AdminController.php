@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Surat;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\User;
 
 class AdminController extends Controller
 {
@@ -91,9 +92,12 @@ class AdminController extends Controller
         Surat::create([
             'user_id' => $request->user_id,
             'kode_surat' => $request->kode_surat,
+            'judul' => $request->judul,
             'tujuan' => $request->tujuan,
+            'pengirim' => $request->pengirim,
             'tanggal_surat' => $request->tanggal_surat,
             'no_surat' => $request->no_surat,
+            'jenis_surat' => $request->jenis_surat,
             'file_surat' => 'surat_files/' . $fileName, // Simpan path file yang diupload
             'status' => "masuk",
         ]);
@@ -125,12 +129,15 @@ class AdminController extends Controller
         // Buat surat baru
         Surat::create([
             'user_id' => $request->user_id,
+            'judul' => $request->judul,
             'kode_surat' => $request->kode_surat,
             'tujuan' => $request->tujuan,
+            'pengirim' => $request->pengirim,
             'tanggal_surat' => $request->tanggal_surat,
             'no_surat' => $request->no_surat,
             'file_surat' => 'surat_files/' . $fileName, // Simpan path file yang diupload
             'status' => "keluar",
+            'jenis_surat' => "jenis_surat",
         ]);
 
         // Redirect setelah berhasil disimpan
@@ -208,10 +215,13 @@ class AdminController extends Controller
         // Update data surat
         $surat->update([
             'user_id' => $request->user_id,
+            'judul' => $request->judul,
             'kode_surat' => $request->kode_surat,
             'tujuan' => $request->tujuan,
+            'pengirim' => $request->pengirim,
             'tanggal_surat' => $request->tanggal_surat,
             'no_surat' => $request->no_surat,
+            'jenis_surat' => $request->jenis_surat,
             // 'status' => $request->status,
         ]);
 
@@ -245,5 +255,68 @@ class AdminController extends Controller
         // Redirect setelah berhasil dihapus
         return redirect()->route('admin.allSurat')->with('success', 'Surat berhasil dihapus');
     }
+    public function getUser(){
+        $data = User::paginate(10);
+        $totalUser = User::count();
 
+    // Menghitung pengguna berdasarkan role (misalnya, Admin dan User)
+    $totalAdmin = User::where('role', 'admin')->count();
+    $totalGuru = User::where('role', 'guru')->count();
+    $totalKelas = User::where('role', 'kelas')->count();
+        return view("admin.user",compact('data','totalUser','totalAdmin','totalGuru','totalKelas'));
+    }
+    public function editUser($id)
+    {
+        // Ambil surat berdasarkan ID
+        $user = user::find($id);
+
+        // Pastikan surat ditemukan
+        if (!$user) {
+            return redirect()->route('user')->with('error', 'Surat tidak ditemukan');
+        }
+
+        // Kembalikan view dengan data surat
+        return view('admin.editUser', compact('user'));
+    }
+    public function updateUser(Request $request, $id)
+    {
+        // Validasi input
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'role' => 'required|string',
+        ]);
+
+        // Mencari pengguna berdasarkan ID
+        $user = User::findOrFail($id);
+
+        // Update data pengguna
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->role = $request->role;
+        $user->save();
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('user')->with('success', 'Data pengguna berhasil diperbarui');
+    }
+    public function destroyUser($id)
+    {
+        // Temukan surat berdasarkan ID
+        $user = User::where('id', $id)->first();
+        // dd($id);
+        if (!$user) {
+            return redirect()->route('surat')->with('error', 'Surat tidak ditemukan');
+        }
+
+        // Hapus file yang terkait jika ada
+        // if ($surat->file_surat && file_exists(public_path($surat->file_surat))) {
+        //     unlink(public_path($surat->file_surat));
+        // }
+
+        // Hapus surat dari database
+        $user->delete();
+
+        // Redirect setelah berhasil dihapus
+        return redirect()->route('user')->with('success', 'Surat berhasil dihapus');
+    }
 }

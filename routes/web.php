@@ -39,6 +39,7 @@ Route::middleware('auth')->group(function () {
 //guru routes
 Route::middleware(['auth', 'role:guru'])->group(function () {
     Route::get('/guru/dashboard', [GuruController::class, 'dashboard'])->name('guru.dashboard');
+    Route::get('guru/surat',[GuruController::class,'index'])->name('guru.surat');
 });
 
 
@@ -62,6 +63,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/surat/{id}/edit', [AdminController::class, 'edit'])->name('surat.edit');
     Route::put('/surat/{id}', [AdminController::class, 'update'])->name('surat.update');
     Route::delete('/surat/{id}', [AdminController::class, 'destroy'])->name('surat.delete');
+    Route::delete('/user/{id}', [AdminController::class, 'destroyUser'])->name('user.destroy');
+    Route::get('user', [AdminController::class, 'getUser'])->name('user');
+    Route::put('user/{id}', [AdminController::class, 'updateUser'])->name('user.update');
+    Route::get('user/{id}/edit',[AdminController::class,'editUser'])->name('user.edit');
 });
 
 

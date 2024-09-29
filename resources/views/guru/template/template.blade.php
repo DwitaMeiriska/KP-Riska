@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>AdminLTE | Dashboard v3</title><!--begin::Primary Meta Tags-->
+    <title>Guru | Dashboard v3</title><!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="title" content="AdminLTE | Dashboard v3">
     <meta name="author" content="ColorlibHQ">
@@ -94,7 +94,7 @@
                                     <p>Dashboard</p>
                                 </a> </li>
                         </li>
-                        <li class="nav-item {{ Request::is('admin/template*') ? 'bg-dark' : '' }}"> <a href={{ route('admin.template') }} class="nav-link"> <i
+                        {{-- <li class="nav-item {{ Request::is('admin/template*') ? 'bg-dark' : '' }}"> <a href={{ route('admin.template') }} class="nav-link"> <i
                                     class="nav-icon bi bi-envelope"></i>
                                 <p>Surat Masuk</p>
                             </a> </li>
@@ -105,7 +105,7 @@
                         <li class="nav-item {{ Request::is('user*') ? 'bg-dark' : '' }}"> <a href='{{route('user')}}' class="nav-link"> <i
                                     class="nav-icon bi bi-people"></i>
                                 <p>Manajemen User</p>
-                            </a> </li>
+                            </a> </li> --}}
                         {{-- <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-box-seam-fill"></i>
                                 <p>
                                     Widgets
