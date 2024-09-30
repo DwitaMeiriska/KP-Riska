@@ -1,14 +1,14 @@
-@extends('admin.template.template')
+@extends('Guru.template.template')
 @section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="card card-primary">
                 <button class="btn btn-lg btn-primary col-lg-6 p-3 mt-3" ><h1>Tambah Surat</h1></button>
                 <div class="card-header mt-3">
-                    <h3 class="card-title">Tambah Surat Baru</h3>
+                    <h3 class="card-title">Tambah Surat Izin Siswa</h3>
                 </div>
                 <!-- form start -->
-                <form action="{{ route('surats.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('guru.storeSuratIzin') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
@@ -25,7 +25,7 @@
                         <!-- Kode Surat -->
                         <div class="form-group">
                             <label for="kode_surat">Kode Surat</label>
-                            <input type="text" class="form-control" id="kode_surat" name="kode_surat" placeholder="Masukkan kode surat" required>
+                            <input type="text" class="form-control" id="kode_surat" name="kode_surat" value="Izin" readonly>
                         </div>
                         <div class="form-group">
                             <label for="kode_surat">Judul</label>
@@ -33,12 +33,19 @@
                         </div>
                         <div class="form-group">
                             <label for="tujuan">Tujuan</label>
-                            <input type="text" class="form-control" id="tujuan" name="tujuan" placeholder="Masukkan kode surat" required>
+                            <input type="text" class="form-control" id="tujuan" name="tujuan" value="{{ Auth::user()->name }}" readonly>
+
                         </div>
                         <div class="form-group">
                             <label for="pengirim">Pengirim</label>
                             <input type="text" class="form-control" id="pengirim" name="pengirim" placeholder="Masukkan Pengirim" required>
                         </div>
+
+                        <div class="form-group">
+                            <label for="nisn">NISN</label>
+                            <input type="text" class="form-control" id="nisn" name="nisn" placeholder="Masukkan NISN" required>
+                        </div>
+
                         <!-- Tanggal Surat -->
                         <div class="form-group">
                             <label for="tanggal_surat">Tanggal Surat</label>
@@ -48,9 +55,13 @@
                         <!-- Nomor Surat -->
                         <div class="form-group">
                             <label for="no_surat">Nomor Surat</label>
-                            <input type="text" class="form-control" id="no_surat" name="no_surat" placeholder="Masukkan nomor surat" required>
+                            <input type="text" class="form-control" id="no_surat" name="no_surat" value="000" readonly>
                         </div>
 
+                        <div class="form-group">
+                            <label for="keterangan">Keterangan</label>
+                            <input type="text" class="form-control" id="keterangan" name="keterangan" placeholder="Masukkan Keterangan" required>
+                        </div>
                         <!-- File Surat -->
                         <div class="form-group">
                             <label for="file_surat">Upload File Surat</label>
@@ -61,7 +72,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="jenis_surat" class="form-label">Jenis Surat</label>
                             <select class="form-control" id="jenis_surat" name="jenis_surat">
                                 <option value="izin_sekolah">Masuk</option>
@@ -71,7 +82,27 @@
                                 <option value="tugas">Tugas</option>
                                 <option value="permohonan">Permohonan</option>
                             </select>
+                        </div> --}}
+                        <div class="form-group">
+                            <label for="kelas" class="form-label">Kelas</label>
+                            <select class="form-control" id="kelas" name="kelas">
+                                <option value="8A">8A</option>
+                                <option value="9A">9A</option>
+                                <option value="7A" >7A</option>
+                                <option value="7B">7B</option>
+                                <option value="8B">8B</option>
+                                <option value="9B">9B</option>
+                            </select>
                         </div>
+                        <div class="form-group">
+                            <label for="status_izin" class="form-label">Status</label>
+                            <select class="form-control" id="status_izin" name="status_izin">
+                                <option value="belum" selected>Di Terima</option>
+                                <option value="tolak">Di Tolak</option>
+                                <option value="terima" >Di Terima</option>
+                            </select>
+                        </div>
+                        <input type="hidden" name="jenis_surat" id="jenis_surat" value="izin_sekolah">
                         <!-- Status Surat -->
                         {{-- <div class="form-group">
                             <label for="status">Status</label>

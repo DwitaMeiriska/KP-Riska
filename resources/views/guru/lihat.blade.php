@@ -1,10 +1,11 @@
-@extends('admin.template.template')
+@extends('guru.template.template')
 
 @section('content')
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12">
             <h1>Detail Surat</h1>
+            @if($surat)
             <table class="table table-bordered">
                 <tr>
                     <th>Judul</th>
@@ -50,11 +51,12 @@
                 </tr>
             </table>
             @if($surat->status == "masuk")
-                <a href="{{ route('admin.template') }}" class="btn btn-secondary">Kembali</a>
-            @elseif($surat->status == "keluar")
-                <a href="{{ route('admin.keluar') }}" class="btn btn-secondary">Kembali</a>
+                <a href="{{ route('guru.suratIzin') }}" class="btn btn-secondary">Kembali</a>
+            {{-- @elseif($surat->status == "keluar")
+                <a href="{{ route('admin.keluar') }}" class="btn btn-secondary">Kembali</a> --}}
+            @else
+            <p>Data belum ada:(</p>
             @endif
-
         </div>
     </div>
 </div>

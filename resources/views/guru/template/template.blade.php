@@ -89,9 +89,13 @@
                                         <p>Dashboard v3</p>
                                     </a> </li>
                             </ul> --}}
-                            <li class="nav-item {{ Request::is('admin/allsurat*') ? 'bg-dark' : '' }}"> <a href='{{route('admin.allSurat')}}' class="nav-link"> <i
+                            <li class="nav-item {{ Request::is('guru/dashboard*') ? 'bg-dark' : '' }}"> <a href='{{route('guru.dashboard')}}' class="nav-link"> <i
                                         class="nav-icon bi bi-speedometer"></i>
                                     <p>Dashboard</p>
+                                </a> </li>
+                            <li class="nav-item {{ Request::is('guru/suratizin*') ? 'bg-dark' : '' }}"> <a href='{{route('guru.suratIzin')}}' class="nav-link"> <i
+                                        class="nav-icon bi bi-envelope"></i>
+                                    <p>Surat Izin</p>
                                 </a> </li>
                         </li>
                         {{-- <li class="nav-item {{ Request::is('admin/template*') ? 'bg-dark' : '' }}"> <a href={{ route('admin.template') }} class="nav-link"> <i

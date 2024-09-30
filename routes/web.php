@@ -40,6 +40,10 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'role:guru'])->group(function () {
     Route::get('/guru/dashboard', [GuruController::class, 'dashboard'])->name('guru.dashboard');
     Route::get('guru/surat',[GuruController::class,'index'])->name('guru.surat');
+    Route::get('guru/{id}/lihat',[GuruController::class,'lihat'])->name('guru.lihat');
+    Route::get('guru/suratizin',[GuruController::class,'suratIzin'])->name('guru.suratIzin');
+    Route::get('guru/tambahsuratizin',[GuruController::class,'tambahSuratIzin'])->name('guru.tambahSuratIzin');
+    Route::post('guru/storesuratizin',[GuruController::class,'StoreSuratIzin'])->name('guru.storeSuratIzin');
 });
 
 
