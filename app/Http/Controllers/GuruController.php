@@ -180,10 +180,19 @@ class GuruController extends Controller
 
     return view('kelas.kelas', compact('data', 'totalSiswa', 'kelasName'));
 }
+    public function tambahKelas(){
+        return view('kelas.tambahSiswa');
+    }
+
+    public function storeSiswa(Request $request){
+
+        $data = Kelas::create($request->all());
+        return redirect()->route('guru.kelas')->with('success', 'Data Kelas Berhasil');
+    }
 
     public function editKelas($id){
         $data = Kelas::find($id);
-        return view('kelas.editKelas',compact('data'));
+        return view('kelas.edit',compact('data'));
 }
 
     public function updateKelas(Request $request, $id){
@@ -195,6 +204,6 @@ class GuruController extends Controller
     public function deleteKelas($id){
         $data = Kelas::find($id);
         $data->delete();
-        return redirect()->route('kelas.kelas')->with('success', 'Data Kelas Berhasil');
+        return redirect()->route('guru.kelas')->with('success', 'Data Kelas Berhasil');
     }
 }

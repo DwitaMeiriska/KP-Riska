@@ -66,7 +66,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">
-                                {{-- <a href="{{ Route('admin.tambahkeluar') }}"><button class="btn btn-primary">Tambah +</button></a> --}}
+                                <a href="{{ Route('guru.tambahKelas') }}"><button class="btn btn-primary">Tambah +</button></a>
                             </h3>
                         </div>
 
@@ -144,14 +144,14 @@
                                                         <td>{{ $dt->nisn }}</td>
                                                         <td>{{ $dt->kelas }}</td>
                                                         <td>{{ $dt->namaOrangTua }}</td>
-                                                        <td>{{ $dt->noHpOrangTua }}</td>
-                                                        <td>{{ $dt->guru }}</td>
+                                                        <td>{{ $dt->noTelpOrangTua }}</td>
+                                                        <td>{{ $dt->guru_id }}</td>
                                                         {{-- <td><a href="{{ route('dt.lihat', $dt->id_surat) }}">
                                                             <button class="btn btn-sm btn-primary">Lihat</button>
                                                         </a></td> --}}
                                                         <td>
-                                                            <a href="{{ route('kelas.edit', $dt->id_surat) }}" class="btn btn-sm btn-warning">Edit</a>
-                                                            <form action="{{ route('kelas.delete', $dt->id_surat) }}" method="POST" style="display:inline;">
+                                                            <a href="{{ route('guru.editKelas', $dt->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                                            <form action="{{ route('guru.deleteKelas', $dt->id) }}" method="POST" style="display:inline;">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus dt ini?')">Delete</button>
