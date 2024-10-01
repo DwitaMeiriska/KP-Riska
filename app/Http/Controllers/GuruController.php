@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kelas;
 use App\Models\Surat;
 use App\Models\SuratIzin;
 use Illuminate\Support\Str;
@@ -164,5 +165,36 @@ class GuruController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function kelas()
+{
+    $data = Kelas::where('guru_id', auth()->user()->id)->paginate(10);
+
+    $totalSiswa = Kelas::where('guru_id', auth()->user()->id)->count();
+
+    $kelas = Kelas::where('guru_id', auth()->user()->id)->first();
+
+    // Check if $kelas is not null before accessing its properties
+    $kelasName = $kelas ? $kelas->kelas : 'Tidak ada kelas tersedia';  // Handle null case
+
+    return view('kelas.kelas', compact('data', 'totalSiswa', 'kelasName'));
+}
+
+    public function editKelas($id){
+        $data = Kelas::find($id);
+        return view('kelas.editKelas',compact('data'));
+}
+
+    public function updateKelas(Request $request, $id){
+        $data = Kelas::find($id);
+        $data->update($request->all());
+        return redirect()->route('guru.kelas')->with('success', 'Data Kelas Berhasil');
+    }
+
+    public function deleteKelas($id){
+        $data = Kelas::find($id);
+        $data->delete();
+        return redirect()->route('kelas.kelas')->with('success', 'Data Kelas Berhasil');
     }
 }

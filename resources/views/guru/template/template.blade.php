@@ -97,6 +97,10 @@
                                         class="nav-icon bi bi-envelope"></i>
                                     <p>Surat Izin</p>
                                 </a> </li>
+                            <li class="nav-item {{ Request::is('guru/kelas*') ? 'bg-dark' : '' }}"> <a href='{{route('guru.kelas')}}' class="nav-link"> <i
+                                        class="nav-icon bi bi-house"></i>
+                                    <p>Kelas</p>
+                                </a> </li>
                         </li>
                         {{-- <li class="nav-item {{ Request::is('admin/template*') ? 'bg-dark' : '' }}"> <a href={{ route('admin.template') }} class="nav-link"> <i
                                     class="nav-icon bi bi-envelope"></i>
