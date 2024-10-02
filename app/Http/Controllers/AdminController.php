@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Guru;
 use App\Models\Surat;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -319,4 +320,41 @@ class AdminController extends Controller
         // Redirect setelah berhasil dihapus
         return redirect()->route('user')->with('success', 'Surat berhasil dihapus');
     }
+
+    public function guru(){
+
+        $data = Guru::with('user')->paginate(10);
+        $totalGuru = Guru::count();
+        return view(
+            'admin.guru', compact('data','totalGuru')
+        );
+    }
+    public function tambahGuru(){
+        $user = User::where('role','guru')->get();
+
+        // dd($user);
+        return view('admin.tambahGuru',compact('user'));
+    }
+
+    public function storeGuru(Request $request)
+    {
+        // Validasi data input
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'nip' => 'required|string|max:100',
+            'kelas' => 'required|string|max:100',
+        ]);
+
+        // Simpan data ke database
+        Guru::create([
+            'user_id' => $request->user_id,
+            'nip' => $request->nip,
+            'kelas' => $request->kelas
+        ]);
+
+        // Redirect setelah berhasil disimpan
+        return redirect()->route('admin.guru')->with('success', 'Guru berhasil ditambahkan');
+    }
+    
 }
+

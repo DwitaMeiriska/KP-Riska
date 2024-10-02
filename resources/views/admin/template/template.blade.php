@@ -106,6 +106,10 @@
                                     class="nav-icon bi bi-people"></i>
                                 <p>Manajemen User</p>
                             </a> </li>
+                        <li class="nav-item {{ Request::is('admin/guru*') ? 'bg-dark' : '' }}"> <a href='{{route('admin.guru')}}' class="nav-link"> <i
+                                    class="nav-icon bi bi-person"></i>
+                                <p>Manajemen Guru</p>
+                            </a> </li>
                         {{-- <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-box-seam-fill"></i>
                                 <p>
                                     Widgets

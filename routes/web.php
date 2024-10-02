@@ -77,6 +77,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('user', [AdminController::class, 'getUser'])->name('user');
     Route::put('user/{id}', [AdminController::class, 'updateUser'])->name('user.update');
     Route::get('user/{id}/edit',[AdminController::class,'editUser'])->name('user.edit');
+    Route::get('/admin/guru',[AdminController::class,'guru'])->name('admin.guru');
+    Route::get('/admin/tambahGuru',[AdminController::class,'tambahGuru'])->name('admin.tambahGuru');
+    Route::post('/admin/storeguru',[AdminController::class,'storeGuru'])->name("admin.storeGuru");
 });
 
 
