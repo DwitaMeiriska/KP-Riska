@@ -145,7 +145,7 @@
                                                         <td>{{ $dt->kelas }}</td>
                                                         <td>{{ $dt->namaOrangTua }}</td>
                                                         <td>{{ $dt->noTelpOrangTua }}</td>
-                                                        <td>{{ $dt->guru_id }}</td>
+                                                        <td>{{ $dt->guru->user->name }}</td>
                                                         {{-- <td><a href="{{ route('dt.lihat', $dt->id_surat) }}">
                                                             <button class="btn btn-sm btn-primary">Lihat</button>
                                                         </a></td> --}}

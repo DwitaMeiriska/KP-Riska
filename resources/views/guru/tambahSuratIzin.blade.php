@@ -13,14 +13,6 @@
                     <div class="card-body">
                         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                         <!-- User ID (Foreign key) -->
-                        {{-- <div class="form-group">
-                            <label for="user_id">User</label>
-                            <select class="form-control" id="user_id" name="user_id">
-                                @foreach($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                @endforeach
-                            </select>
-                        </div> --}}
 
                         <!-- Kode Surat -->
                         <div class="form-group">
@@ -32,19 +24,27 @@
                             <input type="text" class="form-control" id="judul" name="judul" placeholder="Masukkan Judul" required>
                         </div>
                         <div class="form-group">
+                            <label for="nisn">Nama - NISN</label>
+                            <select class="form-control" id="nisn" name="nisn">
+                                @foreach($kelas as $user)
+                                    <option value="{{ $user->nisn }}">{{ $user->name }} | {{ $user->nisn }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="tujuan">Tujuan</label>
                             <input type="text" class="form-control" id="tujuan" name="tujuan" value="{{ Auth::user()->name }}" readonly>
 
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="pengirim">Pengirim</label>
                             <input type="text" class="form-control" id="pengirim" name="pengirim" placeholder="Masukkan Pengirim" required>
-                        </div>
+                        </div> --}}
 
-                        <div class="form-group">
-                            <label for="nisn">NISN</label>
+                        {{-- <div class="form-group">
+                            <label for="nisn">Nama - NISN</label>
                             <input type="text" class="form-control" id="nisn" name="nisn" placeholder="Masukkan NISN" required>
-                        </div>
+                        </div> --}}
 
                         <!-- Tanggal Surat -->
                         <div class="form-group">
@@ -83,7 +83,7 @@
                                 <option value="permohonan">Permohonan</option>
                             </select>
                         </div> --}}
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="kelas" class="form-label">Kelas</label>
                             <select class="form-control" id="kelas" name="kelas">
                                 <option value="8A">8A</option>
@@ -93,7 +93,7 @@
                                 <option value="8B">8B</option>
                                 <option value="9B">9B</option>
                             </select>
-                        </div>
+                        </div> --}}
                         <div class="form-group">
                             <label for="status_izin" class="form-label">Status</label>
                             <select class="form-control" id="status_izin" name="status_izin">

@@ -17,4 +17,9 @@ class Kelas extends Model
         'noTelpOrangTua',
         'guru_id',
     ];
+
+    public function guru()
+    {
+        return $this->belongsTo(Guru::class);
+    }
 }

@@ -31,7 +31,7 @@
                             <label for="nisn">NISN</label>
                             <input type="text" class="form-control" id="nisn" name="nisn" placeholder="Masukkan NISN" required>
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="kelas" class="form-label">Kelas</label>
                             <select class="form-control" id="kelas" name="kelas">
                                 <option value="8A">8A</option>
@@ -41,12 +41,12 @@
                                 <option value="8B">8B</option>
                                 <option value="9B">9B</option>
                             </select>
-                        </div>
-                        {{-- <div class="form-group">
-                            <label for="tujuan">Tujuan</label>
-                            <input type="text" class="form-control" id="tujuan" name="tujuan" value="{{ Auth::user()->name }}" readonly>
-
                         </div> --}}
+                        <div class="form-group">
+                            <label for="kelas">Kelas</label>
+                            <input type="text" class="form-control" id="kelas" name="kelas" value="{{ $name }}" readonly>
+
+                        </div>
 
                         <div class="form-group">
                             <label for="namaOrangTua">Nama Orang Tua</label>

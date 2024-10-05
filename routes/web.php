@@ -1,11 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TesController;
 use App\Http\Controllers\GuruController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GaleriController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +29,11 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/dashboard/surat',[DashboardController::class,'createSurat'])->name('dashboard.createSurat');
 Route::post('/dashboard/storesurat',[DashboardController::class,'suratStore'])->name('dashboard.suratStore');
+Route::get('tes',[TesController::class,'index']);
+Route::post('/upload',[TesController::class,'upload'])->name('upload');
+Route::get('/galeri',[DashboardController::class,'galeri'])->name('galeri');
+Route::get('/artikel',[DashboardController::class,'artikel'])->name('artikel');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -81,6 +88,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/guru',[AdminController::class,'guru'])->name('admin.guru');
     Route::get('/admin/tambahGuru',[AdminController::class,'tambahGuru'])->name('admin.tambahGuru');
     Route::post('/admin/storeguru',[AdminController::class,'storeGuru'])->name("admin.storeGuru");
+    Route::get('/admin/galeri',[AdminController::class,'galeri'])->name('admin.galeri');
+    Route::get('/admin/tambahGaleri',[AdminController::class,'tambahGaleri'])->name('admin.tambahGaleri');
+    Route::post('/admin/storeGaleri',[AdminController::class,'storeGaleri'])->name("admin.storeGaleri");
+    Route::get('/admin/galeri/{id}/edit',[AdminController::class,'editGaleri'])->name('admin.editGaleri');
+    Route::put('/admin/galeri/{id}',[AdminController::class,'updateGaleri'])->name('admin.updateGaleri');
+    Route::delete('/admin/galeri/{id}',[AdminController::class,'destroyGaleri'])->name('admin.destroyGaleri');
 });
 
 

@@ -75,7 +75,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">
-                            <a href="{{ Route('admin.tambahkeluar') }}"><button class="btn btn-primary">Tambah +</button></a>
+                            {{-- <a href="{{ Route('admin.tambahkeluar') }}"><button class="btn btn-primary">Tambah +</button></a> --}}
                         </h3>
                     </div>
 
@@ -164,8 +164,8 @@
                                                     {{-- <td>{{ $surat->id_surat }}</td> --}}
                                                     <td>{{ $surat->judul }}</td>
                                                     <td>{{ $surat->kode_surat }}</td>
-                                                    <td>{{ $surat->Tujuan }}</td>
-                                                    <td>{{ $surat->Pengirim }}</td>
+                                                    <td>{{ $surat->tujuan }}</td>
+                                                    <td>{{ $surat->pengirim }}</td>
                                                     <td>{{ $surat->user->name ?? 'Tidak ada pengguna' }}</td>
                                                     <td>{{ $surat->tanggal_surat }}</td>
                                                     <td>{{ $surat->no_surat }}</td>
@@ -204,6 +204,16 @@
                                     </table>
                                 </div>
                             </div>
+                            <style>
+                                .pagination .page-link {
+                                    font-size: 12px; /* Ukuran default untuk semua page link */
+                                }
+
+                                .pagination .page-item .page-link[rel="prev"],
+                                .pagination .page-item .page-link[rel="next"] {
+                                    font-size: 8px;  /* Memperkecil ukuran tanda "<" dan ">" */
+                                }
+                            </style>
 
                             <div class="row">
                                 <div class="col-sm-12 col-md-5">
@@ -214,10 +224,16 @@
                                 </div>
                                 <div class="col-sm-12 col-md-7">
                                     <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
-                                        {{ $data->links() }}
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination pagination-sm m-0 float-end">
+                                                {{ $data->links() }}
+                                            </ul>
+                                        </nav>
                                     </div>
                                 </div>
                             </div>
+
+
 
                         </div>
                     </div>

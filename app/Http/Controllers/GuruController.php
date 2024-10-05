@@ -46,11 +46,15 @@ class GuruController extends Controller
 
     public function tambahSuratIzin()
     {
-        return view("guru.tambahSuratIzin");
+        $kelas = Kelas::where('guru_id', auth()->user()->id)->get();
+        // dd($kelas);
+        return view("guru.tambahSuratIzin",compact('kelas'));
     }
     public function suratIzin()
     {
-        $data = SuratIzin::with('surat')->paginate(10); // Ambil data surat izin beserta surat terkait
+        $data = SuratIzin::whereHas('surat', function ($query) {
+            $query->where('user_id', auth()->user()->id);
+        })->with('surat')->paginate(10);
 
         $totalSurat = SuratIzin::count(); // Total surat izin
 
@@ -69,10 +73,7 @@ class GuruController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+
     public function storeSuratIzin(Request $request)
     {
         // dd($request);
@@ -94,14 +95,14 @@ class GuruController extends Controller
 
         // Simpan file surat dan dapatkan path
         $fileSuratPath = $file->move(public_path('surat_files'), $fileName);
-
+        $data = Kelas::where('nisn',$request->nisn)->first();
         // Buat surat baru
         $surat = Surat::create([
             'user_id' => $request->user_id,
             'kode_surat' => $request->kode_surat,
             'judul' => $request->judul,
             'tujuan' => $request->tujuan,
-            'pengirim' => $request->pengirim,
+            'pengirim' => $data->name,
             'tanggal_surat' => $request->tanggal_surat,
             'no_surat' => $request->no_surat,
             'jenis_surat' => $request->jenis_surat,
@@ -112,9 +113,9 @@ class GuruController extends Controller
         $id_surat = $surat->id_surat;
         // dd($id_surat);
         $izin = SuratIzin::create([
-            'nama_siswa' => $request->pengirim,
+            'nama_siswa' => $data->name,
             'nisn' => $request->nisn,
-            'kelas' => $request->kelas,
+            'kelas' => $data->kelas,
             'keterangan' => $request->keterangan,
             'status' => $request->status_izin,
             'lampiran' => 'surat_files/' . $fileName,
@@ -181,7 +182,9 @@ class GuruController extends Controller
     return view('kelas.kelas', compact('data', 'totalSiswa', 'kelasName'));
 }
     public function tambahKelas(){
-        return view('kelas.tambahSiswa');
+        $kelas = Kelas::where('guru_id', auth()->user()->id)->first();
+        $name = $kelas ? $kelas->kelas : 'Tidak ada kelas tersedia';  // Handle null case
+        return view('kelas.tambahSiswa',compact('name'));
     }
 
     public function storeSiswa(Request $request){

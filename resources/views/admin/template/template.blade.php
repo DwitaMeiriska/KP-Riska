@@ -89,27 +89,95 @@
                                         <p>Dashboard v3</p>
                                     </a> </li>
                             </ul> --}}
-                            <li class="nav-item {{ Request::is('admin/allsurat*') ? 'bg-dark' : '' }}"> <a href='{{route('admin.allSurat')}}' class="nav-link"> <i
-                                        class="nav-icon bi bi-speedometer"></i>
+                            <li class="nav-item {{ Request::is('admin/allsurat*') ? 'bg-dark' : '' }}">
+                                <a href="{{ route('admin.allSurat') }}" class="nav-link">
+                                    <i class="nav-icon bi bi-speedometer"></i>
                                     <p>Dashboard</p>
-                                </a> </li>
-                        </li>
-                        <li class="nav-item {{ Request::is('admin/template*') ? 'bg-dark' : '' }}"> <a href={{ route('admin.template') }} class="nav-link"> <i
-                                    class="nav-icon bi bi-envelope"></i>
-                                <p>Surat Masuk</p>
-                            </a> </li>
-                        <li class="nav-item {{ Request::is('admin/keluar*') ? 'bg-dark' : '' }}"> <a href='{{route('admin.keluar')}}' class="nav-link"> <i
-                                    class="nav-icon bi bi-envelope"></i>
-                                <p>Surat keluar</p>
-                            </a> </li>
-                        <li class="nav-item {{ Request::is('user*') ? 'bg-dark' : '' }}"> <a href='{{route('user')}}' class="nav-link"> <i
-                                    class="nav-icon bi bi-people"></i>
-                                <p>Manajemen User</p>
-                            </a> </li>
-                        <li class="nav-item {{ Request::is('admin/guru*') ? 'bg-dark' : '' }}"> <a href='{{route('admin.guru')}}' class="nav-link"> <i
-                                    class="nav-icon bi bi-person"></i>
-                                <p>Manajemen Guru</p>
-                            </a> </li>
+                                </a>
+                            </li>
+
+                            <li class="nav-item {{ Request::is('admin/template*') ? 'bg-dark' : '' }}">
+                                <a href="{{ route('admin.template') }}" class="nav-link">
+                                    <i class="nav-icon bi bi-envelope"></i>
+                                    <p>Surat Masuk</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item {{ Request::is('admin/keluar*') ? 'bg-dark' : '' }}">
+                                <a href="{{ route('admin.keluar') }}" class="nav-link">
+                                    <i class="nav-icon bi bi-envelope"></i>
+                                    <p>Surat Keluar</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item {{ Request::is('user*') ? 'bg-dark' : '' }}">
+                                <a href="{{ route('user') }}" class="nav-link">
+                                    <i class="nav-icon bi bi-people"></i>
+                                    <p>Manajemen User</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item {{ Request::is('admin/guru*') ? 'bg-dark' : '' }}">
+                                <a href="{{ route('admin.guru') }}" class="nav-link">
+                                    <i class="nav-icon bi bi-person"></i>
+                                    <p>Manajemen Guru</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item"> <!-- Hapus menu-open di sini -->
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon bi bi-speedometer"></i>
+                                    <p>
+                                        Manajemen Profil
+                                        <i class="nav-arrow bi bi-chevron-right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview" style="box-sizing: border-box; display: none;"> <!-- Set display ke none untuk tertutup -->
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link"> <!-- Kosongkan route untuk Kepala Sekolah -->
+                                            <i class="nav-icon bi bi-circle"></i>
+                                            <p>- Kepala Sekolah</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link"> <!-- Kosongkan route untuk Sekolah -->
+                                            <i class="nav-icon bi bi-circle"></i>
+                                            <p>- Sekolah</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link"> <!-- Kosongkan route untuk PPDB -->
+                                            <i class="nav-icon bi bi-circle"></i>
+                                            <p>- PPDB</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link"> <!-- Kosongkan route untuk Galeri -->
+                                            <i class="nav-icon bi bi-circle"></i>
+                                            <p>- Galeri</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link"> <!-- Kosongkan route untuk Kontak -->
+                                            <i class="nav-icon bi bi-circle"></i>
+                                            <p>- Kontak</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link"> <!-- Kosongkan route untuk Kirim Surat -->
+                                            <i class="nav-icon bi bi-circle"></i>
+                                            <p>- Kirim Surat</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link"> <!-- Kosongkan route untuk Artikel -->
+                                            <i class="nav-icon bi bi-circle"></i>
+                                            <p>- Artikel</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
                         {{-- <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-box-seam-fill"></i>
                                 <p>
                                     Widgets

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Surat;
+use App\Models\Galeri;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('dashboard/tes');
+        return view('dashboard/dashboard');
     }
 
 
@@ -28,7 +29,7 @@ class DashboardController extends Controller
             'pengirim' => 'required|string|max:255',
             'tanggal_surat' => 'required|date',
             'no_surat' => 'required|string|max:255',
-            'file_surat' => 'required|file|mimes:pdf,doc,docx|max:2048', // validasi file surat
+            'file_surat' => 'required|file|mimes:pdf,doc,docx,png,jpeg|max:2048', // validasi file surat
             'jenis_surat' => 'required|string',
         ]);
 
@@ -60,5 +61,14 @@ class DashboardController extends Controller
         // Redirect ke halaman lain dengan pesan sukses
         return redirect()->route('dashboard.createSurat')->with('success', 'Surat berhasil ditambahkan');
     }
+    public function galeri(){
+        $data = Galeri::all();
+        return view('dashboard.galeri.index', compact('data'));
+    }
+
+        public function artikel(){
+        return view('dashboard.artikel.index');
+    }
 }
+
 
