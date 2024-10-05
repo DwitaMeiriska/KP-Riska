@@ -33,7 +33,8 @@ Route::get('tes',[TesController::class,'index']);
 Route::post('/upload',[TesController::class,'upload'])->name('upload');
 Route::get('/galeri',[DashboardController::class,'galeri'])->name('galeri');
 Route::get('/artikel',[DashboardController::class,'artikel'])->name('artikel');
-Route::get('/profiles',[DashboardController::class,'profile'])->name('profiles');
+Route::get('/profiles',[DashboardController::class,'profiles'])->name('profiles');
+Route::get('/profileskepalasekolah',[DashboardController::class,'profileKepala'])->name('profileKepala');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -119,6 +120,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     //profile
     Route::get('/admin/profile',[AdminController::class,'editProfile'])->name('admin.editProfile');
     Route::put('/admin/profile/{id}',[AdminController::class,'updateProfile'])->name('admin.updateProfile');
+
+    //principal_profile
+    Route::get('/admin/kepalasekolah',[AdminController::class,'editKepala'])->name('admin.editKepala');
+    Route::put('/admin/kepalasekolah/{id}',[AdminController::class,'updateKepala'])->name('admin.updateKepala');
+
 
 });
 

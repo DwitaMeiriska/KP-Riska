@@ -9,6 +9,7 @@ use App\Models\Artikel;
 use App\Models\Profile;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\PrincipalProfile;
 use Illuminate\Foundation\Auth\User;
 
 class AdminController extends Controller
@@ -612,6 +613,49 @@ class AdminController extends Controller
 
         return redirect()->route('admin.editProfile')->with('success', 'Profil sekolah berhasil diperbarui');
     }
+
+
+
+
+
+
+
+    public function editKepala()
+{
+    $profile = PrincipalProfile::first();
+    return view('admin.principal_profile.edit', compact('profile'));
+}
+
+public function updateKepala(Request $request)
+{
+    $request->validate([
+        'nama' => 'required|string|max:255',
+        'visi' => 'nullable|string',
+        'misi' => 'nullable|string',
+        'bio' => 'nullable|string',
+        'telepon' => 'nullable|string|max:15',
+        'email' => 'nullable|email|max:255',
+        'nip' => 'nullable|string|max:20',
+        'riwayat_pendidikan' => 'nullable|string',
+        'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+    ]);
+
+    $profile = PrincipalProfile::first();
+
+    if (!$profile) {
+        $profile = new PrincipalProfile();
+    }
+
+    if ($request->hasFile('foto')) {
+        $fotoPath = $request->file('foto')->store('uploads/principal', 'public');
+        $profile->foto = $fotoPath;
+    }
+
+    // Update profil kepala sekolah
+    $profile->update($request->only(['nama', 'visi', 'misi', 'bio', 'telepon', 'email', 'nip', 'riwayat_pendidikan']));
+
+    return redirect()->route('admin.editKepala')->with('success', 'Profil kepala sekolah berhasil diperbarui');
+}
 
 
 }

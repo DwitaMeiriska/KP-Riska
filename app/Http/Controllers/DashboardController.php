@@ -8,6 +8,7 @@ use App\Models\Artikel;
 use App\Models\Profile;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\PrincipalProfile;
 
 class DashboardController extends Controller
 {
@@ -91,10 +92,14 @@ class DashboardController extends Controller
         return view('dashboard.artikel.index', compact('artikels', 'kategori'));
     }
 
-    public function profile()
+    public function profiles()
     {
         $profile = Profile::first();
         return view('dashboard.profile.index', compact('profile'));
+    }
+    public function profileKepala(){
+        $profile = PrincipalProfile::first();
+        return view('dashboard.principal_profile.index', compact('profile'));
     }
 
 }
