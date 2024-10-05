@@ -33,6 +33,7 @@ Route::get('tes',[TesController::class,'index']);
 Route::post('/upload',[TesController::class,'upload'])->name('upload');
 Route::get('/galeri',[DashboardController::class,'galeri'])->name('galeri');
 Route::get('/artikel',[DashboardController::class,'artikel'])->name('artikel');
+Route::get('/profiles',[DashboardController::class,'profile'])->name('profiles');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -113,6 +114,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/artikel/{id}/edit',[AdminController::class,'editArtikel'])->name('admin.editArtikel');
     Route::put('/admin/artikel/{id}',[AdminController::class,'updateArtikel'])->name('admin.updateArtikel');
     Route::delete('/admin/artikel/{id}',[AdminController::class,'destroyArtikel'])->name('admin.deleteArtikel');
+
+
+    //profile
+    Route::get('/admin/profile',[AdminController::class,'editProfile'])->name('admin.editProfile');
+    Route::put('/admin/profile/{id}',[AdminController::class,'updateProfile'])->name('admin.updateProfile');
+
 });
 
 

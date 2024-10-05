@@ -6,6 +6,7 @@ use App\Models\Guru;
 use App\Models\Surat;
 use App\Models\Galeri;
 use App\Models\Artikel;
+use App\Models\Profile;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\User;
@@ -572,7 +573,45 @@ class AdminController extends Controller
 
         return redirect()->route('admin.artikel')->with('success', 'Artikel berhasil dihapus');
     }
+    public function editProfile()
+    {
+        $profile = Profile::first(); // Ambil data profil pertama
+        return view('admin.profile.edit', compact('profile'));
+    }
 
+    // Menyimpan perubahan profil sekolah
+    public function updateProfile(Request $request)
+    {
+        $request->validate([
+            'nama_sekolah' => 'required|string|max:255',
+            'visi' => 'required|string',
+            'misi' => 'required|string',
+            'alamat' => 'required|string',
+            'telepon' => 'required|string|max:15',
+            'email' => 'required|email|max:255',
+            'deskripsi' => 'required|string',
+        ]);
+
+        $profile = Profile::first(); // Ambil profil pertama
+
+        // Jika belum ada profil, buat baru
+        if (!$profile) {
+            $profile = new Profile();
+        }
+
+        // Update atau buat profil
+        $profile->update([
+            'nama_sekolah' => $request->nama_sekolah,
+            'visi' => $request->visi,
+            'misi' => $request->misi,
+            'alamat' => $request->alamat,
+            'telepon' => $request->telepon,
+            'email' => $request->email,
+            'deskripsi' => $request->deskripsi,
+        ]);
+
+        return redirect()->route('admin.editProfile')->with('success', 'Profil sekolah berhasil diperbarui');
+    }
 
 
 }

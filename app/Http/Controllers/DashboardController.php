@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Surat;
 use App\Models\Galeri;
 use App\Models\Artikel;
+use App\Models\Profile;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
@@ -89,4 +90,11 @@ class DashboardController extends Controller
         // Mengirim data artikel dan kategori yang dipilih ke view
         return view('dashboard.artikel.index', compact('artikels', 'kategori'));
     }
+
+    public function profile()
+    {
+        $profile = Profile::first();
+        return view('dashboard.profile.index', compact('profile'));
+    }
+
 }
