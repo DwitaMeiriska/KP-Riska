@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Guru;
 use App\Models\Surat;
 use App\Models\Galeri;
+use App\Models\Artikel;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\User;
@@ -19,7 +20,8 @@ class AdminController extends Controller
         return view('admin.dashboard');
     }
 
-    public function getAllSurat(){
+    public function getAllSurat()
+    {
         $totalSurat = Surat::count(); // Total surat
         // $totalSuratMasuk = Surat::where('status', 'masuk')->count(); // Total surat keluar
         $latest = Surat::where('status', 'masuk')->orderBy('tanggal_surat', 'desc')->first(); // Tanggal surat masuk terbaru
@@ -228,11 +230,11 @@ class AdminController extends Controller
         ]);
 
         // Redirect setelah berhasil di-update
-        if($surat->status == 'keluar'){
+        if ($surat->status == 'keluar') {
             return redirect()->route('admin.keluar')->with('success', 'Surat keluar berhasil diperbarui');
-        }elseif($surat->status == 'masuk'){
+        } elseif ($surat->status == 'masuk') {
             return redirect()->route('admin.template')->with('success', 'Surat masuk berhasil diperbarui');
-        }else{
+        } else {
             return redirect()->route('admin.allSurat')->with('success', 'Surat berhasil diperbarui');
         }
     }
@@ -257,15 +259,16 @@ class AdminController extends Controller
         // Redirect setelah berhasil dihapus
         return redirect()->route('admin.allSurat')->with('success', 'Surat berhasil dihapus');
     }
-    public function getUser(){
+    public function getUser()
+    {
         $data = User::paginate(10);
         $totalUser = User::count();
 
-    // Menghitung pengguna berdasarkan role (misalnya, Admin dan User)
-    $totalAdmin = User::where('role', 'admin')->count();
-    $totalGuru = User::where('role', 'guru')->count();
-    $totalKelas = User::where('role', 'kelas')->count();
-        return view("admin.user",compact('data','totalUser','totalAdmin','totalGuru','totalKelas'));
+        // Menghitung pengguna berdasarkan role (misalnya, Admin dan User)
+        $totalAdmin = User::where('role', 'admin')->count();
+        $totalGuru = User::where('role', 'guru')->count();
+        $totalKelas = User::where('role', 'kelas')->count();
+        return view("admin.user", compact('data', 'totalUser', 'totalAdmin', 'totalGuru', 'totalKelas'));
     }
     public function editUser($id)
     {
@@ -322,19 +325,22 @@ class AdminController extends Controller
         return redirect()->route('user')->with('success', 'Surat berhasil dihapus');
     }
 
-    public function guru(){
+    public function guru()
+    {
 
         $data = Guru::with('user')->paginate(10);
         $totalGuru = Guru::count();
         return view(
-            'admin.guru', compact('data','totalGuru')
+            'admin.guru',
+            compact('data', 'totalGuru')
         );
     }
-    public function tambahGuru(){
-        $user = User::where('role','guru')->get();
+    public function tambahGuru()
+    {
+        $user = User::where('role', 'guru')->get();
 
         // dd($user);
-        return view('admin.tambahGuru',compact('user'));
+        return view('admin.tambahGuru', compact('user'));
     }
 
     public function storeGuru(Request $request)
@@ -357,98 +363,216 @@ class AdminController extends Controller
         return redirect()->route('admin.guru')->with('success', 'Guru berhasil ditambahkan');
     }
 
-    public function galeri(){
+    public function galeri()
+    {
         $galeris = Galeri::paginate(10);
         $totalGaleri = Galeri::count();
         return view(
-            'admin.galeri.tampil', compact('galeris','totalGaleri')
+            'admin.galeri.tampil',
+            compact('galeris', 'totalGaleri')
         );
     }
-    public function tambahGaleri(){
+    public function tambahGaleri()
+    {
         return view('admin.galeri.tambahGaleri');
     }
 
     public function storeGaleri(Request $request)
-{
-    // Validasi data input
-    $request->validate([
-        'judul' => 'required|string|max:255',
-        'deskripsi' => 'required|string|max:1000',
-        'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Pastikan 'file' sesuai dengan nama input
-        'tgl_upload' => 'required|date',
-    ]);
+    {
+        // Validasi data input
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'required|string|max:1000',
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Pastikan 'file' sesuai dengan nama input
+            'tgl_upload' => 'required|date',
+        ]);
 
-    // Dapatkan file gambar dari input
-    $image = $request->file('file'); // Pastikan nama input file adalah 'file'
-    $filename = time() . '.' . $image->getClientOriginalExtension();
-
-    // Pindahkan file ke direktori public/file
-    $image->move(public_path('file'), $filename);
-
-    // Buat entri baru di tabel galeri
-    Galeri::create([
-        'judul' => $request->judul,
-        'deskripsi' => $request->deskripsi,
-        'file' => 'file/' . $filename, // Simpan path yang benar
-        'user' => $request->user, // Menyimpan nama user dari input
-        'tgl_upload' => $request->tgl_upload,
-    ]);
-
-    return redirect()->route('admin.galeri')->with('success', 'Galeri berhasil ditambahkan');
-}
-
-public function editGaleri($id)
-{
-    $galeri = Galeri::find($id);
-    return view('admin.galeri.edit', compact('galeri'));
-
-}
-
-public function updateGaleri(Request $request, $id)
-{
-    // Validasi data input
-    $request->validate([
-        'judul' => 'required|string|max:255',
-        'user' => 'required|string|max:255',
-        'deskripsi' => 'required|string|max:1000',
-        'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Mengubah menjadi nullable
-        'tgl_upload' => 'required|date',
-    ]);
-
-    // Temukan galeri berdasarkan ID
-    $galeri = Galeri::findOrFail($id);
-
-    // Jika ada file baru diunggah
-    if ($request->hasFile('file')) {
-        $image = $request->file('file'); // Ambil file
+        // Dapatkan file gambar dari input
+        $image = $request->file('file'); // Pastikan nama input file adalah 'file'
         $filename = time() . '.' . $image->getClientOriginalExtension();
 
         // Pindahkan file ke direktori public/file
         $image->move(public_path('file'), $filename);
 
-        // Perbarui data dengan file baru
-        $galeri->file = 'file/' . $filename; // Simpan path yang benar
+        // Buat entri baru di tabel galeri
+        Galeri::create([
+            'judul' => $request->judul,
+            'deskripsi' => $request->deskripsi,
+            'file' => 'file/' . $filename, // Simpan path yang benar
+            'user' => $request->user, // Menyimpan nama user dari input
+            'tgl_upload' => $request->tgl_upload,
+        ]);
+
+        return redirect()->route('admin.galeri')->with('success', 'Galeri berhasil ditambahkan');
     }
 
-    // Update data galeri lainnya
-    $galeri->judul = $request->judul;
-    $galeri->deskripsi = $request->deskripsi;
-    $galeri->user = $request->user; // Menyimpan nama user dari input
-    $galeri->tgl_upload = $request->tgl_upload;
+    public function editGaleri($id)
+    {
+        $galeri = Galeri::find($id);
+        return view('admin.galeri.edit', compact('galeri'));
+    }
 
-    // Simpan perubahan
-    $galeri->save();
 
-    // Redirect dengan pesan sukses
-    return redirect()->route('admin.galeri')->with('success', 'Galeri berhasil diupdate');
+    public function updateGaleri(Request $request, $id)
+    {
+        // Validasi data input
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'user' => 'required|string|max:255',
+            'deskripsi' => 'required|string|max:1000',
+            'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Mengubah menjadi nullable
+            'tgl_upload' => 'required|date',
+        ]);
+
+        // Temukan galeri berdasarkan ID
+        $galeri = Galeri::findOrFail($id);
+
+        // Jika ada file baru diunggah
+        if ($request->hasFile('file')) {
+            $image = $request->file('file'); // Ambil file
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+
+            // Pindahkan file ke direktori public/file
+            $image->move(public_path('file'), $filename);
+
+            // Perbarui data dengan file baru
+            $galeri->file = 'file/' . $filename; // Simpan path yang benar
+        }
+
+        // Update data galeri lainnya
+        $galeri->judul = $request->judul;
+        $galeri->deskripsi = $request->deskripsi;
+        $galeri->user = $request->user; // Menyimpan nama user dari input
+        $galeri->tgl_upload = $request->tgl_upload;
+
+        // Simpan perubahan
+        $galeri->save();
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('admin.galeri')->with('success', 'Galeri berhasil diupdate');
+    }
+
+
+    public function destroyGaleri($id)
+    {
+        $galeri = Galeri::find($id);
+        $galeri->delete();
+        return redirect()->route('admin.galeri')->with('success', 'Galeri berhasil dihapus');
+    }
+    public function artikel()
+    {
+        // Mengambil semua artikel
+        $artikels = Artikel::all();
+        return view('admin.artikel.index', compact('artikels'));
+    }
+
+    public function tambahArtikel()
+    {
+        // Menampilkan form untuk menambah artikel baru
+        return view('admin.artikel.tambah');
+    }
+
+    public function storeArtikel(Request $request)
+    {
+        // Validasi data input
+        $request->validate([
+            'judul' => 'required',
+            'deskripsi' => 'required',
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'tgl_upload' => 'required|date',
+            'user' => 'required|string|max:255',
+            'kategori' => 'required|string|max:255',
+        ]);
+
+        // Dapatkan file gambar dari input
+        $image = $request->file('file');
+        $filename = time() . '.' . $image->getClientOriginalExtension();
+
+        // Pindahkan file ke direktori public/file
+        $image->move(public_path('file'), $filename);
+
+        // Buat entri baru di tabel artikel
+        Artikel::create([
+            'judul' => $request->judul,
+            'deskripsi' => $request->deskripsi,
+            'file' => 'file/' . $filename, // Simpan path yang benar
+            'user' => $request->user,
+            'tgl_upload' => $request->tgl_upload,
+            'kategori' => $request->kategori,
+        ]);
+
+        return redirect()->route('admin.artikel')->with('success', 'Artikel berhasil ditambahkan');
+    }
+
+    public function editArtikel($id)
+    {
+        // Menemukan artikel berdasarkan ID
+        $artikel = Artikel::findOrFail($id);
+        return view('admin.artikel.edit', compact('artikel'));
+    }
+
+    public function updateArtikel(Request $request, $id)
+    {
+        // Validasi data input
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'user' => 'required|string|max:255',
+            'deskripsi' => 'required|string|max:1000',
+            'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Mengubah menjadi nullable
+            'tgl_upload' => 'required|date',
+            'kategori' => 'required|string|max:255',
+        ]);
+
+        // Temukan artikel berdasarkan ID
+        $artikel = Artikel::findOrFail($id);
+
+        // Jika ada file baru diunggah
+        if ($request->hasFile('file')) {
+            // Hapus file lama jika ada
+            if ($artikel->file && file_exists(public_path($artikel->file))) {
+                unlink(public_path($artikel->file));
+            }
+
+            // Dapatkan informasi file yang diunggah
+            $image = $request->file('file');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+
+            // Pindahkan file ke direktori public/file
+            $image->move(public_path('file'), $filename);
+
+            // Simpan path yang benar
+            $artikel->file = 'file/' . $filename;
+        }
+
+        // Update data artikel lainnya
+        $artikel->judul = $request->judul;
+        $artikel->deskripsi = $request->deskripsi;
+        $artikel->user = $request->user;
+        $artikel->tgl_upload = $request->tgl_upload;
+        $artikel->kategori = $request->kategori;
+
+        // Simpan perubahan
+        $artikel->save();
+
+        return redirect()->route('admin.artikel')->with('success', 'Artikel berhasil diperbarui');
+    }
+
+    public function destroyArtikel($id)
+    {
+        // Menemukan artikel berdasarkan ID
+        $artikel = Artikel::findOrFail($id);
+
+        // Hapus file jika ada
+        if ($artikel->file && file_exists(public_path($artikel->file))) {
+            unlink(public_path($artikel->file));
+        }
+
+        // Hapus artikel
+        $artikel->delete();
+
+        return redirect()->route('admin.artikel')->with('success', 'Artikel berhasil dihapus');
+    }
+
+
+
 }
-
-
-public function destroyGaleri($id)
-{
-    $galeri = Galeri::find($id);
-    $galeri->delete();
-    return redirect()->route('admin.galeri')->with('success', 'Galeri berhasil dihapus');
-}
-}
-

@@ -6,110 +6,86 @@
 <div class="container py-5">
     <h1 class="text-center mb-5">Artikel & Berita Terbaru</h1>
 
-    <!-- Featured Article -->
-    <div class="row mb-5">
-        <div class="col-lg-6">
-            <div class="featured-article position-relative" style="overflow: hidden;">
-                <img src="https://naevaschool.naevaweb.my.id/userfiles/uploads/img-edukasi-57.jpg" class="img-fluid rounded shadow-lg" alt="Featured Article">
-                <div class="overlay d-flex flex-column justify-content-end p-4 text-white position-absolute"
-                    style="top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.4); transition: background 0.3s ease-in-out;">
-                    <h3 class="fw-bold">Judul Artikel Unggulan</h3>
-                    <p class="mb-2">Ringkasan artikel unggulan yang memberikan gambaran singkat tentang isi artikel.</p>
-                    <a href="#" class="btn btn-light btn-sm">Baca Selengkapnya</a>
-                </div>
+    <!-- Filter Kategori -->
+    <div class="mb-4 d-flex justify-content-center">
+        <form method="GET" action="{{ route('artikel') }}">
+            <div class="input-group">
+                <select name="kategori" class="form-select" onchange="this.form.submit()">
+                    <option value="">Semua Kategori</option>
+                    <option value="berita" {{ request('kategori') == 'berita' ? 'selected' : '' }}>Berita</option>
+                    <option value="pengumuman" {{ request('kategori') == 'pengumuman' ? 'selected' : '' }}>Pengumuman</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Filter</button>
             </div>
-        </div>
-        <div class="col-lg-6 d-flex flex-column justify-content-center">
-            <h4>Artikel Unggulan</h4>
-            <p class="text-muted">Deskripsi lebih mendalam mengenai artikel yang sedang ditampilkan sebagai unggulan. Artikel ini berfokus pada topik penting yang relevan bagi pembaca.</p>
-            <a href="#" class="btn btn-dark">Lihat Semua Artikel</a>
-        </div>
+        </form>
     </div>
 
-    <!-- Grid of Articles & News -->
-    <div class="row g-4">
-        <!-- Article Item 1 -->
-        <div class="col-lg-4 col-md-6">
-            <div class="card h-100 shadow-sm border-0" style="transition: transform 0.3s ease-in-out;">
-                <img src="https://naevaschool.naevaweb.my.id/userfiles/uploads/img-edukasi-5-4.jpg" class="card-img-top" alt="Article 1">
-                <div class="card-body">
-                    <h5 class="card-title">Judul Artikel 1</h5>
-                    <p class="card-text">Ringkasan singkat dari artikel pertama yang menarik pembaca untuk membaca lebih lanjut.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0">
-                    <a href="#" class="btn btn-outline-dark btn-sm">Baca Selengkapnya</a>
+    <!-- List of Articles with Pagination -->
+    <div class="list-group">
+        @foreach ($artikels as $artikel)
+        <a href="#" class="list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#modalPreview{{ $artikel->id }}">
+            <div class="d-flex align-items-start">
+                <img src="{{ asset($artikel->file) }}" class="img-fluid me-3 preview-img" alt="{{ $artikel->judul }}">
+                <div>
+                    <h5 class="mb-1">{{ $artikel->judul }}</h5>
+                    <p class="mb-1">{{ Str::limit($artikel->deskripsi, 50) }}</p>
+                    <small class="text-muted">Ditulis oleh: {{ $artikel->user }} | Tanggal: {{ $artikel->tgl_upload }}</small>
                 </div>
             </div>
-        </div>
+        </a>
 
-        <!-- Article Item 2 -->
-        <div class="col-lg-4 col-md-6">
-            <div class="card h-100 shadow-sm border-0" style="transition: transform 0.3s ease-in-out;">
-                <img src="https://naevaschool.naevaweb.my.id/userfiles/uploads/img-edukasi-64.jpg" class="card-img-top" alt="Article 2">
-                <div class="card-body">
-                    <h5 class="card-title">Judul Artikel 2</h5>
-                    <p class="card-text">Deskripsi singkat dari artikel kedua yang membahas topik penting terkait pendidikan.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0">
-                    <a href="#" class="btn btn-outline-dark btn-sm">Baca Selengkapnya</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Article Item 3 -->
-        <div class="col-lg-4 col-md-6">
-            <div class="card h-100 shadow-sm border-0" style="transition: transform 0.3s ease-in-out;">
-                <img src="https://naevaschool.naevaweb.my.id/userfiles/uploads/bg-edukasi-76.jpg" class="card-img-top" alt="Article 3">
-                <div class="card-body">
-                    <h5 class="card-title">Judul Artikel 3</h5>
-                    <p class="card-text">Pengantar artikel ketiga yang memberikan insight singkat untuk mendorong pembaca membaca lebih lanjut.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0">
-                    <a href="#" class="btn btn-outline-dark btn-sm">Baca Selengkapnya</a>
+        <!-- Modal Preview Gambar -->
+        <div class="modal fade" id="modalPreview{{ $artikel->id }}" tabindex="-1" aria-labelledby="modalPreviewLabel{{ $artikel->id }}" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen"> <!-- Menggunakan modal fullscreen -->
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> <!-- Tombol X -->
+                    </div>
+                    <div class="modal-body d-flex justify-content-center align-items-center">
+                        <img src="{{ asset($artikel->file) }}" class="img-fluid" alt="{{ $artikel->judul }}">
+                    </div>
+                    <div class="modal-body text-center">
+                        <h5 class="modal-title mt-2">{{ $artikel->judul }}</h5>
+                        <div class="modal-description mt-3" style="max-height: 200px; overflow-y: auto;">
+                            <p>{{ $artikel->deskripsi }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        @endforeach
     </div>
 
-    <!-- Pagination (if needed) -->
-    <div class="d-flex justify-content-center mt-5">
-        <nav aria-label="Page navigation">
-            <ul class="pagination">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                </li>
-            </ul>
-        </nav>
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center mt-4">
+        {{ $artikels->withQueryString()->links() }} <!-- Pagination yang tetap membawa query string (kategori) -->
     </div>
 </div>
 
-<!-- Inline JavaScript to handle hover effect for overlay -->
-<script>
-    document.querySelectorAll('.featured-article').forEach(item => {
-        item.addEventListener('mouseover', function() {
-            const overlay = this.querySelector('.overlay');
-            overlay.style.background = 'rgba(0, 0, 0, 0.6)';
-        });
-        item.addEventListener('mouseout', function() {
-            const overlay = this.querySelector('.overlay');
-            overlay.style.background = 'rgba(0, 0, 0, 0.4)';
-        });
-    });
+<!-- Styling for Preview Images and Fullscreen Modal -->
+<style>
+    /* Membuat gambar preview memiliki ukuran tetap yang sama */
+    .preview-img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover; /* Menjaga gambar tetap proporsional dalam kotak */
+    }
 
-    document.querySelectorAll('.card').forEach(item => {
-        item.addEventListener('mouseover', function() {
-            this.style.transform = 'translateY(-5px)';
-        });
-        item.addEventListener('mouseout', function() {
-            this.style.transform = 'translateY(0)';
-        });
-    });
-</script>
+    /* Tombol X di modal fullscreen */
+    .modal-fullscreen .btn-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background-color: white;
+        border-radius: 50%;
+        padding: 10px;
+        z-index: 9999;
+    }
+
+    .modal-fullscreen .modal-body {
+        padding: 0;
+        height: 100%;
+    }
+</style>
 
 @endsection

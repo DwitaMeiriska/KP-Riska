@@ -76,25 +76,45 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/tambahmasuk', [AdminController::class, 'tambahMasuk'])->name('admin.tambahmasuk');
     Route::get('/admin/tambahkeluar', [AdminController::class, 'tambahKeluar'])->name('admin.tambahkeluar');
     Route::post('suratskeluar', [AdminController::class, 'storeKeluar'])->name('suratskeluar.store');
+
+
+    //surat
     Route::post('surats', [AdminController::class, 'store'])->name('surats.store');
     Route::get('/surat/{id}/lihat', [AdminController::class, 'lihat'])->name('surat.lihat');
     Route::get('/surat/{id}/edit', [AdminController::class, 'edit'])->name('surat.edit');
     Route::put('/surat/{id}', [AdminController::class, 'update'])->name('surat.update');
     Route::delete('/surat/{id}', [AdminController::class, 'destroy'])->name('surat.delete');
+
+
+    //user
     Route::delete('/user/{id}', [AdminController::class, 'destroyUser'])->name('user.destroy');
     Route::get('user', [AdminController::class, 'getUser'])->name('user');
     Route::put('user/{id}', [AdminController::class, 'updateUser'])->name('user.update');
     Route::get('user/{id}/edit',[AdminController::class,'editUser'])->name('user.edit');
+
+
+    //guru
     Route::get('/admin/guru',[AdminController::class,'guru'])->name('admin.guru');
     Route::get('/admin/tambahGuru',[AdminController::class,'tambahGuru'])->name('admin.tambahGuru');
     Route::post('/admin/storeguru',[AdminController::class,'storeGuru'])->name("admin.storeGuru");
+
+    //galeri
     Route::get('/admin/galeri',[AdminController::class,'galeri'])->name('admin.galeri');
     Route::get('/admin/tambahGaleri',[AdminController::class,'tambahGaleri'])->name('admin.tambahGaleri');
     Route::post('/admin/storeGaleri',[AdminController::class,'storeGaleri'])->name("admin.storeGaleri");
     Route::get('/admin/galeri/{id}/edit',[AdminController::class,'editGaleri'])->name('admin.editGaleri');
     Route::put('/admin/galeri/{id}',[AdminController::class,'updateGaleri'])->name('admin.updateGaleri');
     Route::delete('/admin/galeri/{id}',[AdminController::class,'destroyGaleri'])->name('admin.destroyGaleri');
+
+    //artikel
+    Route::get('/admin/artikel',[AdminController::class,'artikel'])->name('admin.artikel');
+    Route::get('/admin/tambahArtikel',[AdminController::class,'tambahArtikel'])->name('admin.tambahArtikel');
+    Route::post('/admin/storeArtikel',[AdminController::class,'storeArtikel'])->name("admin.storeArtikel");
+    Route::get('/admin/artikel/{id}/edit',[AdminController::class,'editArtikel'])->name('admin.editArtikel');
+    Route::put('/admin/artikel/{id}',[AdminController::class,'updateArtikel'])->name('admin.updateArtikel');
+    Route::delete('/admin/artikel/{id}',[AdminController::class,'destroyArtikel'])->name('admin.deleteArtikel');
 });
+
 
 
 require __DIR__ . '/auth.php';

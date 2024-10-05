@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Surat;
 use App\Models\Galeri;
+use App\Models\Artikel;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,8 @@ class DashboardController extends Controller
     }
 
 
-    public function createSurat(){
+    public function createSurat()
+    {
         return view('dashboard/createSurat');
     }
 
@@ -61,14 +63,30 @@ class DashboardController extends Controller
         // Redirect ke halaman lain dengan pesan sukses
         return redirect()->route('dashboard.createSurat')->with('success', 'Surat berhasil ditambahkan');
     }
-    public function galeri(){
+    public function galeri()
+    {
         $data = Galeri::all();
         return view('dashboard.galeri.index', compact('data'));
     }
 
-        public function artikel(){
-        return view('dashboard.artikel.index');
+
+    public function artikel(Request $request)
+    {
+        // Ambil kategori dari request, jika ada
+        $kategori = $request->query('kategori');
+
+        // Ambil artikel berdasarkan kategori jika kategori dipilih, urutkan berdasarkan tanggal terbaru
+        if ($kategori) {
+            $artikels = Artikel::where('kategori', $kategori)
+                ->orderBy('tgl_upload', 'desc')
+                ->paginate(10);
+        } else {
+            // Jika tidak ada kategori yang dipilih, ambil semua artikel
+            $artikels = Artikel::orderBy('tgl_upload', 'desc')
+                ->paginate(10);
+        }
+
+        // Mengirim data artikel dan kategori yang dipilih ke view
+        return view('dashboard.artikel.index', compact('artikels', 'kategori'));
     }
 }
-
-

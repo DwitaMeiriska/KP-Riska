@@ -12,6 +12,7 @@ class Artikel extends Model
     protected $fillable = [
         'judul',
         'konten',
+        'deskripsi',
         'file',
         'tgl_upload',
         'user',
