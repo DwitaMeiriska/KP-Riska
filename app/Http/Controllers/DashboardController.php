@@ -13,9 +13,11 @@ use App\Models\PrincipalProfile;
 class DashboardController extends Controller
 {
     public function index()
-    {
-        return view('dashboard/dashboard');
-    }
+{
+    $artikels = Artikel::latest()->take(10)->get();
+    $galeris = Galeri::latest()->take(10)->get();
+    return view('dashboard.dashboard', compact('artikels','galeris'));
+}
 
 
     public function createSurat()

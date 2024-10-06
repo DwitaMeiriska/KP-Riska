@@ -16,21 +16,36 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link text-dark active" aria-current="page" href="#">Home</a></li>
-                    <li class="nav-item"><a class="nav-link text-dark" href="#">PPDB</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark active" aria-current="page" href="{{ route('home') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        {{-- <a class="nav-link text-dark" href="{{ route('ppdb') }}">PPDB</a> --}}
+                    </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link text-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tentang Kami</a>
+                        <a class="nav-link text-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Profiles
+                        </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Profil Sekolah</a></li>
-                            <li><a class="dropdown-item" href="#">Fasilitas</a></li>
-                            <li><a class="dropdown-item" href="#">Tenaga Pendidik</a></li>
-                            <li><a class="dropdown-item" href="#">Ekstrakurikuler</a></li>
-                            <li><a class="dropdown-item" href="#">Daftar Prestasi</a></li>
+                            <li><a class="dropdown-item" href="{{ route('profiles') }}">Profil Sekolah</a></li>
+                            <li><a class="dropdown-item" href="{{ route('profileKepala') }}">Kepala Sekolah</a></li>
+
                         </ul>
                     </li>
-                    <li class="nav-item"><a class="nav-link text-dark" href="#">Kontak Kami</a></li>
-                    <li class="nav-item"><a class="nav-link text-dark" href="{{route('dashboard.createSurat')}}">Kirim Surat</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="{{ route('galeri') }}">Galeri</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="{{ route('artikel') }}">Artikel</a>
+                    </li>
+                    {{-- <li class="nav-item">
+                        <a class="nav-link text-dark" href="{{ route('kontak') }}">Kontak Kami</a>
+                    </li> --}}
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="{{ route('dashboard.createSurat') }}">Kirim Surat</a>
+                    </li>
                 </ul>
+
                 <!-- Authentication -->
                 <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
                     @if (Route::has('login'))

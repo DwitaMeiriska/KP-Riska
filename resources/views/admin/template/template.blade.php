@@ -124,7 +124,7 @@
                                 </a>
                             </li>
 
-                            <li class="nav-item"> <!-- Hapus menu-open di sini -->
+                            <li class="nav-item {{ Request::is('admin/profile*') ? 'bg-dark' : '' }} {{ Request::is('admin/kepalasekolah*') ? 'bg-dark' : '' }}">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon bi bi-speedometer"></i>
                                     <p>
@@ -132,15 +132,15 @@
                                         <i class="nav-arrow bi bi-chevron-right"></i>
                                     </p>
                                 </a>
-                                <ul class="nav nav-treeview" style="box-sizing: border-box; display: none;"> <!-- Set display ke none untuk tertutup -->
+                                <ul class="nav nav-treeview" style="display: none;"> <!-- Set display ke none untuk tertutup -->
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link"> <!-- Kosongkan route untuk Kepala Sekolah -->
+                                        <a href="{{ route('admin.editKepala') }}" class="nav-link {{ Request::is('admin/kepalasekolah*') ? 'active' : '' }}"> <!-- Route untuk Kepala Sekolah -->
                                             <i class="nav-icon bi bi-circle"></i>
                                             <p>- Kepala Sekolah</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link"> <!-- Kosongkan route untuk Sekolah -->
+                                        <a href="{{ route('admin.editP  rofile') }}" class="nav-link {{ Request::is('admin/profile*') ? 'active' : '' }}"> <!-- Route untuk Sekolah -->
                                             <i class="nav-icon bi bi-circle"></i>
                                             <p>- Sekolah</p>
                                         </a>
@@ -152,31 +152,20 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link"> <!-- Kosongkan route untuk Galeri -->
+                                        <a href="{{ route('admin.galeri') }}" class="nav-link {{ Request::is('admin/galeri*') ? 'active' : '' }}"> <!-- Route untuk Galeri -->
                                             <i class="nav-icon bi bi-circle"></i>
                                             <p>- Galeri</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link"> <!-- Kosongkan route untuk Kontak -->
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>- Kontak</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link"> <!-- Kosongkan route untuk Kirim Surat -->
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>- Kirim Surat</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link"> <!-- Kosongkan route untuk Artikel -->
+                                        <a href="{{ route('admin.artikel') }}" class="nav-link {{ Request::is('admin/artikel*') ? 'active' : '' }}"> <!-- Route untuk Artikel -->
                                             <i class="nav-icon bi bi-circle"></i>
                                             <p>- Artikel</p>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
+
 
                         {{-- <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-box-seam-fill"></i>
                                 <p>

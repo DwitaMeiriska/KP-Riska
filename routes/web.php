@@ -23,14 +23,14 @@ use App\Http\Controllers\GaleriController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/', [DashboardController::class, 'index']);
+Route::get('/', [DashboardController::class, 'index'])->name('home');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/dashboard/surat',[DashboardController::class,'createSurat'])->name('dashboard.createSurat');
 Route::post('/dashboard/storesurat',[DashboardController::class,'suratStore'])->name('dashboard.suratStore');
-Route::get('tes',[TesController::class,'index']);
-Route::post('/upload',[TesController::class,'upload'])->name('upload');
+// Route::get('tes',[TesController::class,'index']);
+// Route::post('/upload',[TesController::class,'upload'])->name('upload');
 Route::get('/galeri',[DashboardController::class,'galeri'])->name('galeri');
 Route::get('/artikel',[DashboardController::class,'artikel'])->name('artikel');
 Route::get('/profiles',[DashboardController::class,'profiles'])->name('profiles');
