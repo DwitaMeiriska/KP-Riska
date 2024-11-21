@@ -140,7 +140,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.editP  rofile') }}" class="nav-link {{ Request::is('admin/profile*') ? 'active' : '' }}"> <!-- Route untuk Sekolah -->
+                                        <a href="{{ route('admin.editProfile') }}" class="nav-link {{ Request::is('admin/profile*') ? 'active' : '' }}"> <!-- Route untuk Sekolah -->
                                             <i class="nav-icon bi bi-circle"></i>
                                             <p>- Sekolah</p>
                                         </a>
