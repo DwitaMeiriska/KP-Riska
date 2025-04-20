@@ -62,6 +62,7 @@ class DashboardController extends Controller
             'file_surat' => 'surat_files/' . $fileName, // Simpan path file yang diupload
             'status' => 'keluar', // Default status keluar
             'jenis_surat' => $request->jenis_surat, // Mengambil dari input form
+            'acc' => 'ya'
         ]);
 
         // Redirect ke halaman lain dengan pesan sukses

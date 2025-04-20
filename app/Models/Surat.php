@@ -23,6 +23,7 @@ class Surat extends Model
         'jenis_surat',
         'file_surat',
         'status',
+        'acc',
     ];
 
 

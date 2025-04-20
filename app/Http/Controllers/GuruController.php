@@ -108,6 +108,7 @@ class GuruController extends Controller
             'jenis_surat' => $request->jenis_surat,
             'file_surat' => 'surat_files/' . $fileName, // Simpan path file yang diupload
             'status' => "masuk",
+            'acc' => "tidak",
         ]);
 
         $id_surat = $surat->id_surat;
