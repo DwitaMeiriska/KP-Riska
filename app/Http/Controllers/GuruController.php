@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Kelas;
 use App\Models\Surat;
 use App\Models\SuratIzin;
@@ -210,4 +211,54 @@ class GuruController extends Controller
         $data->delete();
         return redirect()->route('guru.kelas')->with('success', 'Data Kelas Berhasil');
     }
+
+    public function suratMasuk()
+    {
+        $data = Surat::where('status', 'masuk')
+                 ->where('user_id', auth()->user()->id)->where('pengirim', auth()->user()->name)
+                 ->paginate(10);
+        return view('guru.tambahMasuk',compact('data'));
+    }
+    public function storeMasuk(Request $request)
+    {
+        // Validasi data input
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'kode_surat' => 'required|string|max:50',
+            // 'tujuan' => 'required|string|max:50',
+            'tanggal_surat' => 'required|date',
+            'no_surat' => 'required|string|max:100',
+            'file_surat' => 'required|file|mimes:pdf,doc,docx', // Tipe file yang diizinkan
+        ]);
+
+        // Dapatkan informasi file yang diunggah
+        $file = $request->file('file_surat');
+
+        // Buat nama file unik
+        $fileName = 'surat_' . time() . '_' . Str::slug($request->kode_surat) . '.' . $file->getClientOriginalExtension();
+
+        // Simpan file surat dan dapatkan path
+        $fileSuratPath = $file->move(public_path('surat_files'), $fileName);
+
+        // Buat surat baru
+        Surat::create([
+            'user_id' => $request->user_id,
+            'kode_surat' => $request->kode_surat,
+            'judul' => $request->judul,
+            'tujuan' => $request->tujuan,
+            'pengirim' => User::where('id', $request->user_id)->first()->name,
+            'tanggal_surat' => $request->tanggal_surat,
+            'no_surat' => $request->no_surat,
+            'jenis_surat' => $request->jenis_surat,
+            'file_surat' => 'surat_files/' . $fileName, // Simpan path file yang diupload
+            'status' => "masuk",
+        ]);
+
+        $data = Surat::where('status', 'masuk')
+                 ->where('user_id', auth()->user()->id)
+                 ->paginate(10);
+
+    return view('guru.dashbard', compact('data'));
+    }
+
 }

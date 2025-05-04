@@ -1,4 +1,4 @@
-@extends('admin.template.template')
+@extends('kepala.template.template')
 @section('content')
     <section class="content">
         <div class="container-fluid">
@@ -19,7 +19,7 @@
             @endif
 
             <div class="row">
-                <div class="col-lg-3 col-6">
+                <div class="col-lg-4 col-6">
                     <div class="small-box bg-info">
                         <div class="inner">
                             <h3>{{ $totalSurat }}</h3>
@@ -32,24 +32,24 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-6">
+                {{-- <div class="col-lg-3 col-6">
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>{{ $totalSuratMasuk }}</h3>
-                            <p>Total Surat masuk</p>
+                            <h3>{{ $totalSuratKeluar }}</h3>
+                            <p>Total Surat Keluar</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                         </div>
                         <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
-                </div>
+                </div> --}}
 
-                <div class="col-lg-3 col-6">
+                <div class="col-lg-4 col-6">
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>{{ $latestMasuk->tanggal_surat ?? 'N/A' }}</h3>
-                            <p>Tanggal Surat Masuk Terbaru</p>
+                            <h3>{{ $latest->tanggal_surat ?? 'N/A' }}</h3>
+                            <p>Tanggal Surat Terbaru</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
@@ -57,11 +57,11 @@
                         <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-6">
+                <div class="col-lg-4 col-6">
                     <div class="small-box bg-danger">
                         <div class="inner">
-                            <h3>{{ $oldestMasuk->tanggal_surat ?? 'N/A' }}</h3>
-                            <p>Tanggal Surat Masuk Terlama</p>
+                            <h3>{{ $oldest->tanggal_surat ?? 'N/A' }}</h3>
+                            <p>Tanggal Surat Terlama</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-pie-graph"></i>
@@ -75,7 +75,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">
-                            <a href="{{ Route('admin.tambahmasuk') }}"><button class="btn btn-primary">Tambah +</button></a>
+                            {{-- <a href="{{ Route('admin.tambahkeluar') }}"><button class="btn btn-primary">Tambah +</button></a> --}}
                         </h3>
                     </div>
 
@@ -152,7 +152,7 @@
                                                     aria-label="Jenis Surat: activate to sort column ascending">Jenis Surat</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1"
                                                     rowspan="1" colspan="1"
-                                                    aria-label="ACC: activate to sort column ascending">ACC</th>
+                                                    aria-label="Jenis Surat: activate to sort column ascending">ACC</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1"
                                                     rowspan="1" colspan="1"
                                                     aria-label="File: activate to sort column ascending">File</th>
@@ -165,37 +165,25 @@
                                             @foreach ($data as $surat)
                                                 <tr>
                                                     {{-- <td>{{ $surat->id_surat }}</td> --}}
-                                                    <td>{{ $surat->kode_surat }}</td>
                                                     <td>{{ $surat->judul }}</td>
+                                                    <td>{{ $surat->kode_surat }}</td>
                                                     <td>{{ $surat->tujuan }}</td>
                                                     <td>{{ $surat->pengirim }}</td>
                                                     <td>{{ $surat->user->name ?? 'Tidak ada pengguna' }}</td>
                                                     <td>{{ $surat->tanggal_surat }}</td>
                                                     <td>{{ $surat->no_surat }}</td>
-                                                    <td>{{ ucfirst($surat->status) }}</td>
-                                                    <td>{{ ucfirst($surat->jenis_surat)}}</td>
-                                                    {{-- <td>{{ ucfirst($surat->acc) }}</td> --}}
-                                                    <td>
-                                                    <form action="{{ route('surat.toggleAcc', $surat->id_surat) }}" method="POST" >
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <button type="submit" class="btn btn-sm btn-{{ $surat->acc == 'acc' ? 'success' : 'danger' }}">
-                                                            {{ ucfirst($surat->acc) }}
-                                                        </button>
-                                                    </form>
-                                                    </td>
+                                                    <td>{{ $surat->status }}</td>
+                                                    <td>{{ $surat->jenis_surat }}</td>
+                                                    <td>{{ ucfirst($surat->acc) }}</td>
                                                     <td><a href="{{ route('surat.lihat', $surat->id_surat) }}">
-                                                            <button class="btn btn-sm btn-primary">Lihat</button>
-                                                        </a></td>
+                                                        <button class="btn btn-sm btn-primary">Lihat</button>
+                                                    </a></td>
                                                     <td>
-                                                        <a href="{{ route('surat.edit', $surat->id_surat) }}"
-                                                            class="btn btn-sm btn-warning">Edit</a>
-                                                        <form action="{{ route('surat.delete', $surat->id_surat) }}"
-                                                            method="POST" style="display:inline;">
+                                                        <a href="{{ route('surat.edit', $surat->id_surat) }}" class="btn btn-sm btn-warning">Edit</a>
+                                                        <form action="{{ route('surat.delete', $surat->id_surat) }}" method="POST" style="display:inline;">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn btn-sm btn-danger"
-                                                                onclick="return confirm('Apakah Anda yakin ingin menghapus surat ini?')">Delete</button>
+                                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus surat ini?')">Delete</button>
                                                         </form>
                                                     </td>
                                                 </tr>
@@ -213,6 +201,7 @@
                                                 <th rowspan="1" colspan="1">No Surat</th>
                                                 <th rowspan="1" colspan="1">Status</th>
                                                 <th rowspan="1" colspan="1">Jenis Surat</th>
+                                                <th rowspan="1" colspan="1">ACC</th>
                                                 <th rowspan="1" colspan="1">File</th>
                                                 <th rowspan="1" colspan="1">Aksi</th>
                                             </tr>
@@ -220,6 +209,16 @@
                                     </table>
                                 </div>
                             </div>
+                            <style>
+                                .pagination .page-link {
+                                    font-size: 12px; /* Ukuran default untuk semua page link */
+                                }
+
+                                .pagination .page-item .page-link[rel="prev"],
+                                .pagination .page-item .page-link[rel="next"] {
+                                    font-size: 8px;  /* Memperkecil ukuran tanda "<" dan ">" */
+                                }
+                            </style>
 
                             <div class="row">
                                 <div class="col-sm-12 col-md-5">
@@ -230,10 +229,16 @@
                                 </div>
                                 <div class="col-sm-12 col-md-7">
                                     <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
-                                        {{ $data->links() }}
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination pagination-sm m-0 float-end">
+                                                {{ $data->links() }}
+                                            </ul>
+                                        </nav>
                                     </div>
                                 </div>
                             </div>
+
+
 
                         </div>
                     </div>

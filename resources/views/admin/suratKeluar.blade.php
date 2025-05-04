@@ -153,6 +153,9 @@
                                                     aria-label="Jenis Surat: activate to sort column ascending">Jenis Surat</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1"
                                                     rowspan="1" colspan="1"
+                                                    aria-label="ACC: activate to sort column ascending">ACC</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1"
+                                                    rowspan="1" colspan="1"
                                                     aria-label="File: activate to sort column ascending">File</th>
 
                                                 <th class="sorting" tabindex="0" aria-controls="example1"
@@ -173,6 +176,15 @@
                                                     <td>{{ $surat->no_surat }}</td>
                                                     <td>{{ $surat->status }}</td>
                                                     <td>{{ $surat->jenis_surat }}</td>
+                                                    <td>
+                                                        <form action="{{ route('surat.toggleAcc', $surat->id_surat) }}" method="POST" >
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button type="submit" class="btn btn-sm btn-{{ $surat->acc == 'acc' ? 'success' : 'danger' }}">
+                                                                {{ ucfirst($surat->acc) }}
+                                                            </button>
+                                                        </form>
+                                                        </td>
                                                     <td><a href="{{ route('surat.lihat', $surat->id_surat) }}">
                                                             <button class="btn btn-sm btn-primary">Lihat</button>
                                                         </a></td>
@@ -202,6 +214,7 @@
                                                 <th rowspan="1" colspan="1">No Surat</th>
                                                 <th rowspan="1" colspan="1">Status</th>
                                                 <th rowspan="1" colspan="1">Jenis Surat</th>
+                                                <th rowspan="1" colspan="1">ACC</th>
                                                 <th rowspan="1" colspan="1">File</th>
                                                 <th rowspan="1" colspan="1">Aksi</th>
                                             </tr>

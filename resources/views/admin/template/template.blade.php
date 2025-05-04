@@ -3,9 +3,9 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>AdminLTE | Dashboard v3</title><!--begin::Primary Meta Tags-->
+    <title> Admin Dachboard</title><!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="title" content="AdminLTE | Dashboard v3">
+    <meta name="title" content="Admin | Dashboard ">
     <meta name="author" content="ColorlibHQ">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q=" crossorigin="anonymous"><!--end::Fonts--><!--begin::Third Party Plugin(OverlayScrollbars)-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/styles/overlayscrollbars.min.css" integrity="sha256-dSokZseQNT08wYEWiz5iLI8QPlKxG+TswNRD8k35cpg=" crossorigin="anonymous"><!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Third Party Plugin(Bootstrap Icons)-->
@@ -66,7 +66,7 @@
             <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="./index.html" class="brand-link">
                     <!--begin::Brand Image--> <img src="{{ asset('adminlte/dist/assets/img/AdminLTELogo.png') }}"
                         alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> <!--end::Brand Image-->
-                    <!--begin::Brand Text--> <span class="brand-text fw-light">AdminLTE 4</span> <!--end::Brand Text-->
+                    <!--begin::Brand Text--> <span class="brand-text fw-light">Admin</span> <!--end::Brand Text-->
                 </a> <!--end::Brand Link--> </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
             <div class="sidebar-wrapper">
                 <nav class="mt-2"> <!--begin::Sidebar Menu-->
@@ -107,6 +107,12 @@
                                 <a href="{{ route('admin.keluar') }}" class="nav-link">
                                     <i class="nav-icon bi bi-envelope"></i>
                                     <p>Surat Keluar</p>
+                                </a>
+                            </li>
+                            <li class="nav-item {{ Request::is('admin/suratIzin*') ? 'bg-dark' : '' }}">
+                                <a href="{{ route('admin.suratIzin') }}" class="nav-link">
+                                    <i class="nav-icon bi bi-envelope"></i>
+                                    <p>Surat Izin Siswa</p>
                                 </a>
                             </li>
 

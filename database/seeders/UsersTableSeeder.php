@@ -32,6 +32,13 @@ class UsersTableSeeder extends Seeder
                 'password' => Hash::make('adminadmin'),
                 'role' => 'kelas',
             ],
+            //kepala
+            [
+                'name' =>  'Kepala Sekolah',
+                'email' => 'kepala@gmail.com',
+                'password' => Hash::make('adminadmin'),
+                'role' => 'kepala',
+            ],
 
             //instansi
             [

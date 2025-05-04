@@ -1,83 +1,95 @@
-@extends('admin.template.template')
+@extends('guru.template.template')
 @section('content')
-    <section class="content">
-        <div class="container-fluid">
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-alert">
-                    {{ session('success') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="card card-primary mb-5">
+                <button class="btn btn-lg btn-primary col-lg-6 p-3 mt-3" ><h1>Tambah Surat</h1></button>
+                <div class="card-header mt-3">
+                    <h3 class="card-title">Tambah Surat Baru</h3>
                 </div>
+                <!-- form start -->
+                <form action="{{ route('guru.storeMasuk') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="card-body">
+                        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                        <!-- User ID (Foreign key) -->
+                        {{-- <div class="form-group">
+                            <label for="user_id">User</label>
+                            <select class="form-control" id="user_id" name="user_id">
+                                @foreach($users as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div> --}}
 
-                <script>
-                    // Setelah 5 detik, alert akan otomatis menghilang
-                    setTimeout(function() {
-                        $('#success-alert').alert('close');
-                    }, 5000); // 5000ms = 5 detik
-                </script>
-            @endif
+                        <!-- Kode Surat -->
+                        <div class="form-group">
+                            <label for="kode_surat">Kode Surat</label>
+                            <input type="text" class="form-control" id="kode_surat" name="kode_surat" placeholder="Masukkan kode surat" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="kode_surat">Judul</label>
+                            <input type="text" class="form-control" id="judul" name="judul" placeholder="Masukkan Judul" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tujuan">Tujuan</label>
+                            <input type="text" class="form-control" id="tujuan" name="tujuan" placeholder="Masukkan kode surat" required>
+                        </div>
+                        {{-- <div class="form-group">
+                            <label for="pengirim">Pengirim</label>
+                            <input type="text" class="form-control" id="pengirim" name="pengirim" placeholder="Masukkan Pengirim" required>
+                        </div> --}}
+                        <!-- Tanggal Surat -->
+                        <div class="form-group">
+                            <label for="tanggal_surat">Tanggal Surat</label>
+                            <input type="date" class="form-control" id="tanggal_surat" name="tanggal_surat" required>
+                        </div>
 
-            <div class="row">
-                <div class="col-lg-3 col-6">
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3>{{ $totalSurat }}</h3>
-                            <p>Total Surat</p>
+                        <!-- Nomor Surat -->
+                        <div class="form-group">
+                            <label for="no_surat">Nomor Surat</label>
+                            <input type="text" class="form-control" id="no_surat" name="no_surat" placeholder="Masukkan nomor surat" required>
                         </div>
-                        <div class="icon">
-                            <i class="ion ion-bag"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
 
-                <div class="col-lg-3 col-6">
-                    <div class="small-box bg-success">
-                        <div class="inner">
-                            <h3>{{ $totalSuratMasuk }}</h3>
-                            <p>Total Surat masuk</p>
+                        <!-- File Surat -->
+                        <div class="form-group">
+                            <label for="file_surat">Upload File Surat</label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="file_surat" name="file_surat" required>
+                                    <label class="custom-file-label" for="file_surat">Pilih file</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
+                        <div class="form-group">
+                            <label for="jenis_surat" class="form-label">Jenis Surat</label>
+                            <select class="form-control" id="jenis_surat" name="jenis_surat">
+                                <option value="izin_sekolah">Masuk</option>
+                                <option value="undangan">Undangan</option>
+                                <option value="keputusan" >Keputusan</option>
+                                <option value="edaran">Edaran</option>
+                                <option value="tugas">Tugas</option>
+                                <option value="permohonan">Permohonan</option>
+                            </select>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <!-- Status Surat -->
+                        {{-- <div class="form-group">
+                            <label for="status">Status</label>
+                            <select class="form-control" id="status" name="status" required>
+                                <option value="masuk">Masuk</option>
+                                <option value="keluar">Keluar</option>
+                            </select>
+                        </div> --}}
                     </div>
-                </div>
 
-                <div class="col-lg-3 col-6">
-                    <div class="small-box bg-warning">
-                        <div class="inner">
-                            <h3>{{ $latestMasuk->tanggal_surat ?? 'N/A' }}</h3>
-                            <p>Tanggal Surat Masuk Terbaru</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-person-add"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box bg-danger">
-                        <div class="inner">
-                            <h3>{{ $oldestMasuk->tanggal_surat ?? 'N/A' }}</h3>
-                            <p>Tanggal Surat Masuk Terlama</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
+                </form>
             </div>
-
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            <a href="{{ Route('admin.tambahmasuk') }}"><button class="btn btn-primary">Tambah +</button></a>
-                        </h3>
-                    </div>
+                    
 
                     <div class="card-body">
                         <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
@@ -152,13 +164,7 @@
                                                     aria-label="Jenis Surat: activate to sort column ascending">Jenis Surat</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1"
                                                     rowspan="1" colspan="1"
-                                                    aria-label="ACC: activate to sort column ascending">ACC</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1"
-                                                    rowspan="1" colspan="1"
                                                     aria-label="File: activate to sort column ascending">File</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1"
-                                                    rowspan="1" colspan="1"
-                                                    aria-label="Aksi: activate to sort column ascending">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -175,29 +181,11 @@
                                                     <td>{{ ucfirst($surat->status) }}</td>
                                                     <td>{{ ucfirst($surat->jenis_surat)}}</td>
                                                     {{-- <td>{{ ucfirst($surat->acc) }}</td> --}}
-                                                    <td>
-                                                    <form action="{{ route('surat.toggleAcc', $surat->id_surat) }}" method="POST" >
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <button type="submit" class="btn btn-sm btn-{{ $surat->acc == 'acc' ? 'success' : 'danger' }}">
-                                                            {{ ucfirst($surat->acc) }}
-                                                        </button>
-                                                    </form>
+
                                                     </td>
                                                     <td><a href="{{ route('surat.lihat', $surat->id_surat) }}">
                                                             <button class="btn btn-sm btn-primary">Lihat</button>
                                                         </a></td>
-                                                    <td>
-                                                        <a href="{{ route('surat.edit', $surat->id_surat) }}"
-                                                            class="btn btn-sm btn-warning">Edit</a>
-                                                        <form action="{{ route('surat.delete', $surat->id_surat) }}"
-                                                            method="POST" style="display:inline;">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-sm btn-danger"
-                                                                onclick="return confirm('Apakah Anda yakin ingin menghapus surat ini?')">Delete</button>
-                                                        </form>
-                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -214,7 +202,6 @@
                                                 <th rowspan="1" colspan="1">Status</th>
                                                 <th rowspan="1" colspan="1">Jenis Surat</th>
                                                 <th rowspan="1" colspan="1">File</th>
-                                                <th rowspan="1" colspan="1">Aksi</th>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -241,5 +228,5 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 @endsection

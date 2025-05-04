@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KepalaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TesController;
 use App\Http\Controllers\GuruController;
@@ -60,6 +61,14 @@ Route::middleware(['auth', 'role:guru'])->group(function () {
     Route::delete('guru/kelas/{id}',[GuruController::class,'deleteKelas'])->name('guru.deleteKelas');
     Route::get('guru/tambahkelas',[GuruController::class,'tambahKelas'])->name('guru.tambahKelas');
     Route::post('guru/storeSiswa',[GuruController::class,'storeSiswa'])->name('guru.storeSiswa');
+    Route::get('guru/suratmasuk',[GuruController::class,'suratMasuk'])->name('guru.suratMasuk');
+    Route::post('guru/storemasuk',[GuruController::class,'storeMasuk'])->name('guru.storeMasuk');
+});
+//kepala routes
+Route::middleware(['auth', 'role:kepala'])->group(function () {
+    Route::get('/kepala/dashboard', [KepalaController::class, 'dashboard'])->name('kepala.dashboard');
+    Route::get('/kepala/surat', [KepalaController::class, 'surat'])->name('kepala.surat');
+    Route::get('/kepala/kelas', [KepalaController::class, 'surat'])->name('kepala.kelas');
 });
 
 
@@ -78,7 +87,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/tambahmasuk', [AdminController::class, 'tambahMasuk'])->name('admin.tambahmasuk');
     Route::get('/admin/tambahkeluar', [AdminController::class, 'tambahKeluar'])->name('admin.tambahkeluar');
     Route::post('suratskeluar', [AdminController::class, 'storeKeluar'])->name('suratskeluar.store');
-
+    Route::get('/admin/suratIzin', [AdminController::class, 'suratIzin'])->name('admin.suratIzin');
+    Route::get('admin/tambahsuratizin',[AdminController::class,'tambahSuratIzin'])->name('admin.tambahSuratIzin');
+    Route::post('admin/storesuratizin',[AdminController::class,'StoreSuratIzin'])->name('admin.storeSuratIzin');
+    Route::get('admin/{id}/lihat',[adminController::class,'lihatSuratIzin'])->name('admin.lihat');
 
     //surat
     Route::post('surats', [AdminController::class, 'store'])->name('surats.store');
@@ -86,6 +98,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/surat/{id}/edit', [AdminController::class, 'edit'])->name('surat.edit');
     Route::put('/surat/{id}', [AdminController::class, 'update'])->name('surat.update');
     Route::delete('/surat/{id}', [AdminController::class, 'destroy'])->name('surat.delete');
+    Route::put('/surat/toggle-acc/{id_surat}', [AdminController::class, 'toggleAcc'])->name('surat.toggleAcc');
 
 
     //user

@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Guru | Dashboard </title><!--begin::Primary Meta Tags-->
+    <title>Kepala Sekolah | Dashboard v3</title><!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="title" content="AdminLTE | Dashboard v3">
     <meta name="author" content="ColorlibHQ">
@@ -66,7 +66,7 @@
             <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="./index.html" class="brand-link">
                     <!--begin::Brand Image--> <img src="{{ asset('adminlte/dist/assets/img/AdminLTELogo.png') }}"
                         alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> <!--end::Brand Image-->
-                    <!--begin::Brand Text--> <span class="brand-text fw-light">Guru</span> <!--end::Brand Text-->
+                    <!--begin::Brand Text--> <span class="brand-text fw-light">Kepala Sekolah</span> <!--end::Brand Text-->
                 </a> <!--end::Brand Link--> </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
             <div class="sidebar-wrapper">
                 <nav class="mt-2"> <!--begin::Sidebar Menu-->
@@ -89,19 +89,15 @@
                                         <p>Dashboard v3</p>
                                     </a> </li>
                             </ul> --}}
-                            <li class="nav-item {{ Request::is('guru/dashboard*') ? 'bg-dark' : '' }}"> <a href='{{route('guru.dashboard')}}' class="nav-link"> <i
+                            <li class="nav-item {{ Request::is('kepala/dashboard*') ? 'bg-dark' : '' }}"> <a href='{{route('kepala.dashboard')}}' class="nav-link"> <i
                                         class="nav-icon bi bi-speedometer"></i>
                                     <p>Dashboard</p>
                                 </a> </li>
-                            <li class="nav-item {{ Request::is('guru/suratizin*') ? 'bg-dark' : '' }}"> <a href='{{route('guru.suratIzin')}}' class="nav-link"> <i
+                            <li class="nav-item {{ Request::is('kepala/surat*') ? 'bg-dark' : '' }}"> <a href='{{route('kepala.surat')}}' class="nav-link"> <i
                                         class="nav-icon bi bi-envelope"></i>
                                     <p>Surat Izin</p>
                                 </a> </li>
-                            <li class="nav-item {{ Request::is('guru/suratmasuk*') ? 'bg-dark' : '' }}"> <a href='{{route('guru.suratMasuk')}}' class="nav-link"> <i
-                                        class="nav-icon bi bi-envelope"></i>
-                                    <p>Surat( Guru )</p>
-                                </a> </li>
-                            <li class="nav-item {{ Request::is('guru/kelas*') ? 'bg-dark' : '' }}"> <a href='{{route('guru.kelas')}}' class="nav-link"> <i
+                            <li class="nav-item {{ Request::is('kepala/kelas*') ? 'bg-dark' : '' }}"> <a href='{{route('kepala.kelas')}}' class="nav-link"> <i
                                         class="nav-icon bi bi-house"></i>
                                     <p>Kelas</p>
                                 </a> </li>
