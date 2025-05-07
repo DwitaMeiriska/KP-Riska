@@ -71,8 +71,9 @@
                     dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
                     ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
                     fugiat nulla pariatur</p>
-                <p><button type="button" class="btn btn-dark">Info PPDB</button> <button type="button"
-                        class="btn btn-outline-dark">Profil Sekolah</button></p>
+                <p><button type="button" class="btn btn-dark">Info PPDB</button>
+                     <a href="{{ route('profiles') }}"><button type="button"
+                        class="btn btn-outline-dark">Profil Sekolah</button></a></p>
             </div>
             <div class="col-lg-5 mb-4">
                 <img src="https://naevaschool.naevaweb.my.id/userfiles/uploads/bg-edukasi-246.jpg"

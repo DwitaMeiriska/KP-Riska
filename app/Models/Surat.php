@@ -31,4 +31,8 @@ class Surat extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    public function guru()
+{
+    return $this->hasOne(Guru::class, 'user_id', 'user_id');
+}
 }

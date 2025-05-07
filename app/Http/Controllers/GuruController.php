@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Guru;
 use App\Models\User;
 use App\Models\Kelas;
 use App\Models\Surat;
@@ -47,15 +48,19 @@ class GuruController extends Controller
 
     public function tambahSuratIzin()
     {
-        $kelas = Kelas::where('guru_id', auth()->user()->id)->get();
+        $kelas = Kelas::with('guru')->where('guru_id', auth()->user()->id)->get();
         // dd($kelas);
         return view("guru.tambahSuratIzin",compact('kelas'));
+
     }
     public function suratIzin()
     {
+        // $data = SuratIzin::whereHas('surat', function ($query) {
+        //     $query->where('user_id', auth()->user()->id);
+        // })->with('surat')->paginate(10);
         $data = SuratIzin::whereHas('surat', function ($query) {
             $query->where('user_id', auth()->user()->id);
-        })->with('surat')->paginate(10);
+        })->with('surat.guru')->paginate(10);
 
         $totalSurat = SuratIzin::count(); // Total surat izin
 
@@ -183,11 +188,15 @@ class GuruController extends Controller
 
     return view('kelas.kelas', compact('data', 'totalSiswa', 'kelasName'));
 }
-    public function tambahKelas(){
-        $kelas = Kelas::where('guru_id', auth()->user()->id)->first();
-        $name = $kelas ? $kelas->kelas : 'Tidak ada kelas tersedia';  // Handle null case
-        return view('kelas.tambahSiswa',compact('name'));
-    }
+public function tambahKelas(){
+    $data = SuratIzin::whereHas('surat', function ($query) {
+        $query->where('user_id', auth()->user()->id);
+    })->with('surat.guru')->first();
+
+    $name = $data?->surat?->guru?->kelas ?? 'Tidak ada kelas tersedia';
+
+    return view('kelas.tambahSiswa', compact('name'));
+}
 
     public function storeSiswa(Request $request){
 
@@ -195,9 +204,15 @@ class GuruController extends Controller
         return redirect()->route('guru.kelas')->with('success', 'Data Kelas Berhasil');
     }
 
-    public function editKelas($id){
-        $data = Kelas::find($id);
-        return view('kelas.edit',compact('data'));
+//     public function editKelas($id){
+//         $data = Kelas::find($id);
+//         return view('kelas.edit',compact('data'));
+// }
+public function editKelas($id){
+    $data = Kelas::find($id);
+    $kelasList = Guru::select('kelas')->distinct()->pluck('kelas'); // ambil kelas unik
+
+    return view('kelas.edit', compact('data', 'kelasList'));
 }
 
     public function updateKelas(Request $request, $id){
@@ -258,7 +273,8 @@ class GuruController extends Controller
                  ->where('user_id', auth()->user()->id)
                  ->paginate(10);
 
-    return view('guru.dashbard', compact('data'));
+    // return view('guru.tambahMasuk', compact('data'));
+        return redirect()->route('guru.suratMasuk')->with('success', 'Surat berhasil ditambahkan');
     }
 
 }

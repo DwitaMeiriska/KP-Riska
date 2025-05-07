@@ -32,7 +32,7 @@
                             <label for="nisn">NISN</label>
                             <input type="text" class="form-control" id="nisn" name="nisn" value="{{$data->nisn}}">
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="kelas" class="form-label">Kelas</label>
                             <select class="form-control" id="kelas"  name="kelas">
                                 <option value="8A" {{ $data->kelas == '8A' ? 'selected' : '' }}>8A</option>
@@ -42,8 +42,15 @@
                                 <option value="8B" {{ $data->kelas == '8B' ? 'selected' : '' }}>8B</option>
                                 <option value="9B" {{ $data->kelas == '9B' ? 'selected' : '' }}>9B</option>
                             </select>
+                        </div> --}}
+                        <div class="form-group">
+                            <label for="kelas" class="form-label">Kelas</label>
+                            <select class="form-control" id="kelas"  name="kelas">
+                                @foreach($kelasList as $kelas)
+                                    <option value="{{ $kelas }}" {{ $data->kelas == $kelas ? 'selected' : '' }}>{{ $kelas }}</option>
+                                @endforeach
+                            </select>
                         </div>
-
                         {{-- <div class="form-group">
                             <label for="tujuan">Tujuan</label>
                             <input type="text" class="form-control" id="tujuan" name="tujuan" value="{{ Auth::user()->name }}" readonly>

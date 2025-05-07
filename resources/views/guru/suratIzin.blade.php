@@ -144,7 +144,7 @@
                                                 {{-- <td>{{ $surat->tujuan }}</td> --}}
                                                 {{-- <td>{{ $surat->pengirim }}</td> --}}
                                                 {{-- <td>{{ $surat->user->name ?? 'Tidak ada pengguna' }}</td> --}}
-                                                <td>{{ $surat->kelas }}</td>
+                                                <td>{{ $surat->surat->guru->kelas ?? '-' }}</td>
                                                 <td>{{ $surat->keterangan }}</td>
                                                 <td>{{ $surat->surat->tanggal_surat }}</td>
                                                 {{-- <td>{{ $surat->no_surat }}</td> --}}

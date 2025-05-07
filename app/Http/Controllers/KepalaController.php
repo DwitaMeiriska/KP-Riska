@@ -23,8 +23,8 @@ class KepalaController extends Controller
         //     ->first();
         $totalSurat = Surat::count(); // Total surat
         // $totalSuratMasuk = Surat::where('status', 'masuk')->count(); // Total surat keluar
-        $latest = Surat::where('status', 'masuk')->orderBy('tanggal_surat', 'desc')->first(); // Tanggal surat masuk terbaru
-        $oldest = Surat::where('status', 'masuk')->orderBy('tanggal_surat', 'asc')->first(); // Tanggal surat masuk terlama
+        $latest = Surat::orderBy('tanggal_surat', 'desc')->first(); // Tanggal surat masuk terbaru
+        $oldest = Surat::orderBy('tanggal_surat', 'asc')->first(); // Tanggal surat masuk terlama
         $data = Surat::paginate(10);
         return view('kepala.test',compact('data', 'totalSurat', 'latest', 'oldest'));
     }
