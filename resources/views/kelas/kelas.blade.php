@@ -74,7 +74,7 @@
                             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6">
-                                        <div class="dt-buttons btn-group flex-wrap"> <button
+                                        {{-- <div class="dt-buttons btn-group flex-wrap"> <button
                                                 class="btn btn-secondary buttons-copy buttons-html5" tabindex="0"
                                                 aria-controls="example1" type="button"><span>Copy</span></button> <button
                                                 class="btn btn-secondary buttons-csv buttons-html5" tabindex="0"
@@ -96,7 +96,7 @@
                                         <div id="example1_filter" class="dataTables_filter"><label>Search:<input type="search"
                                                     class="form-control form-control-sm" placeholder=""
                                                     aria-controls="example1"></label></div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -176,7 +176,7 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
+                                {{-- <div class="row">
                                     <div class="col-sm-12 col-md-5">
                                         <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">
                                             Menampilkan {{ $data->firstItem() }} sampai {{ $data->lastItem() }} dari total
@@ -188,8 +188,25 @@
                                             {{ $data->links() }}
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-5">
+                                        <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">
+                                            Menampilkan {{ $data->firstItem() }} sampai {{ $data->lastItem() }} dari total
+                                            {{ $data->total() }} surat
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-7">
+                                        <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                                            <nav aria-label="Page navigation example">
 
+                                                    {{ $data->links('pagination::bootstrap-4') }}
+
+
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

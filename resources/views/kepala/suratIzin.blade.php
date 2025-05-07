@@ -1,4 +1,4 @@
-@extends('admin.template.template')
+@extends('kepala.template.template')
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -144,13 +144,13 @@
                                                 {{-- <td>{{ $surat->tujuan }}</td> --}}
                                                 {{-- <td>{{ $surat->pengirim }}</td> --}}
                                                 {{-- <td>{{ $surat->user->name ?? 'Tidak ada pengguna' }}</td> --}}
-                                                <td>{{ $surat->kelas }}</td>
+                                                <td>{{ $surat->surat->guru->kelas ?? '-' }}</td>
                                                 <td>{{ $surat->keterangan }}</td>
                                                 <td>{{ $surat->surat->tanggal_surat }}</td>
                                                 {{-- <td>{{ $surat->no_surat }}</td> --}}
-                                                <td>{{ $surat->status }}</td>
+                                                <td>{{ ucfirst($surat->status) }}</td>
                                                 {{-- <td>{{ $surat->jenis_surat }}</td> --}}
-                                                <td><a href="{{ route('admin.lihat', $surat->id_surat) }}">
+                                                <td><a href="{{ route('guru.lihat', $surat->id_surat) }}">
                                                         <button class="btn btn-sm btn-primary">Lihat</button>
                                                     </a></td>
                                                 {{-- <td>
@@ -188,8 +188,8 @@
                                 </table>
                             </div>
                         </div>
-
-                        {{-- <div class="row">
+{{--
+                        <div class="row">
                             <div class="col-sm-12 col-md-5">
                                 <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">
                                     Menampilkan {{ $data->firstItem() }} sampai {{ $data->lastItem() }} dari total
@@ -220,6 +220,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
 

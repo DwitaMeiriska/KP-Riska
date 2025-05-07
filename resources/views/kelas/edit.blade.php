@@ -1,4 +1,4 @@
-@extends('Guru.template.template')
+@extends('guru.template.template')
 @section('content')
     <div class="container-fluid">
         <div class="row">

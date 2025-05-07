@@ -9,6 +9,7 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GaleriController;
+use App\Models\Kepala;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::put('/surat/toggle-acc/{id_surat}', [AdminController::class, 'toggleAcc'])->name('surat.toggleAcc');
 });
 
 
@@ -66,9 +68,11 @@ Route::middleware(['auth', 'role:guru'])->group(function () {
 });
 //kepala routes
 Route::middleware(['auth', 'role:kepala'])->group(function () {
+    Route::get('kepala/{id}/lihat',[KepalaController::class,'lihat'])->name('kepala.lihat');
     Route::get('/kepala/dashboard', [KepalaController::class, 'dashboard'])->name('kepala.dashboard');
-    Route::get('/kepala/surat', [KepalaController::class, 'surat'])->name('kepala.surat');
-    Route::get('/kepala/kelas', [KepalaController::class, 'surat'])->name('kepala.kelas');
+    Route::get('/kepala/surat', [KepalaController::class, 'suratIzin'])->name('kepala.surat');
+    // Route::get('/kepala/kelas', [KepalaController::class, 'surat'])->name('kepala.kelas');
+    Route::get('/kepala/kelas', [KepalaController::class, 'guru'])->name('kepala.kelas');
 });
 
 
@@ -81,6 +85,7 @@ Route::middleware(['auth', 'role:kelas'])->group(function () {
 //menjadi admin
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('admin/{id}/lihat',[adminController::class,'lihatSuratIzin'])->name('admin.lihat');
     Route::get('/admin/template', [AdminController::class, 'index'])->name('admin.template');
     Route::get('/admin/keluar', [AdminController::class, 'suratKeluar'])->name('admin.keluar');
     Route::get('/admin/allsurat', [AdminController::class, 'getAllSurat'])->name('admin.allSurat');
@@ -90,7 +95,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/suratIzin', [AdminController::class, 'suratIzin'])->name('admin.suratIzin');
     Route::get('admin/tambahsuratizin',[AdminController::class,'tambahSuratIzin'])->name('admin.tambahSuratIzin');
     Route::post('admin/storesuratizin',[AdminController::class,'StoreSuratIzin'])->name('admin.storeSuratIzin');
-    Route::get('admin/{id}/lihat',[adminController::class,'lihatSuratIzin'])->name('admin.lihat');
 
     //surat
     Route::post('surats', [AdminController::class, 'store'])->name('surats.store');
@@ -98,7 +102,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/surat/{id}/edit', [AdminController::class, 'edit'])->name('surat.edit');
     Route::put('/surat/{id}', [AdminController::class, 'update'])->name('surat.update');
     Route::delete('/surat/{id}', [AdminController::class, 'destroy'])->name('surat.delete');
-    Route::put('/surat/toggle-acc/{id_surat}', [AdminController::class, 'toggleAcc'])->name('surat.toggleAcc');
 
 
     //user

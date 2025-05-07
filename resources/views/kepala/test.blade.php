@@ -83,7 +83,7 @@
                         <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
-                                    <div class="dt-buttons btn-group flex-wrap"> <button
+                                    {{-- <div class="dt-buttons btn-group flex-wrap"> <button
                                             class="btn btn-secondary buttons-copy buttons-html5" tabindex="0"
                                             aria-controls="example1" type="button"><span>Copy</span></button> <button
                                             class="btn btn-secondary buttons-csv buttons-html5" tabindex="0"
@@ -105,7 +105,7 @@
                                     <div id="example1_filter" class="dataTables_filter"><label>Search:<input type="search"
                                                 class="form-control form-control-sm" placeholder=""
                                                 aria-controls="example1"></label></div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
@@ -156,9 +156,9 @@
                                                 <th class="sorting" tabindex="0" aria-controls="example1"
                                                     rowspan="1" colspan="1"
                                                     aria-label="File: activate to sort column ascending">File</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1"
+                                                {{-- <th class="sorting" tabindex="0" aria-controls="example1"
                                                     rowspan="1" colspan="1"
-                                                    aria-label="Aksi: activate to sort column ascending">Aksi</th>
+                                                    aria-label="Aksi: activate to sort column ascending">Aksi</th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -169,23 +169,33 @@
                                                     <td>{{ $surat->kode_surat }}</td>
                                                     <td>{{ $surat->tujuan }}</td>
                                                     <td>{{ $surat->pengirim }}</td>
-                                                    <td>{{ $surat->user->name ?? 'Tidak ada pengguna' }}</td>
+                                                    <td>{{ $surat->user->name ?? 'User External' }}</td>
                                                     <td>{{ $surat->tanggal_surat }}</td>
                                                     <td>{{ $surat->no_surat }}</td>
                                                     <td>{{ $surat->status }}</td>
-                                                    <td>{{ $surat->jenis_surat }}</td>
-                                                    <td>{{ ucfirst($surat->acc) }}</td>
-                                                    <td><a href="{{ route('surat.lihat', $surat->id_surat) }}">
+                                                    <td>{{ ucwords(str_replace('_', ' ', $surat->jenis_surat)) }}</td>
+                                                    {{-- <td>{{ ucfirst($surat->acc) }}</td> --}}
+                                                    <td>
+                                                        <form action="{{ route('surat.toggleAcc', $surat->id_surat) }}" method="POST" >
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button type="submit" class="btn btn-sm btn-{{ $surat->acc == 'acc' ? 'success' : 'danger' }}">
+                                                                {{ ucfirst($surat->acc) }}
+                                                            </button>
+                                                        </form>
+                                                        </td>
+
+                                                    <td><a href="{{ route('kepala.lihat', $surat->id_surat) }}">
                                                         <button class="btn btn-sm btn-primary">Lihat</button>
                                                     </a></td>
-                                                    <td>
+                                                    {{-- <td>
                                                         <a href="{{ route('surat.edit', $surat->id_surat) }}" class="btn btn-sm btn-warning">Edit</a>
                                                         <form action="{{ route('surat.delete', $surat->id_surat) }}" method="POST" style="display:inline;">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus surat ini?')">Delete</button>
                                                         </form>
-                                                    </td>
+                                                    </td> --}}
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -203,7 +213,7 @@
                                                 <th rowspan="1" colspan="1">Jenis Surat</th>
                                                 <th rowspan="1" colspan="1">ACC</th>
                                                 <th rowspan="1" colspan="1">File</th>
-                                                <th rowspan="1" colspan="1">Aksi</th>
+                                                {{-- <th rowspan="1" colspan="1">Aksi</th> --}}
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -220,7 +230,7 @@
                                 }
                             </style>
 
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-sm-12 col-md-5">
                                     <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">
                                         Menampilkan {{ $data->firstItem() }} sampai {{ $data->lastItem() }} dari total
@@ -236,8 +246,25 @@
                                         </nav>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
+                            <div class="row">
+                                <div class="col-sm-12 col-md-5">
+                                    <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">
+                                        Menampilkan {{ $data->firstItem() }} sampai {{ $data->lastItem() }} dari total
+                                        {{ $data->total() }} surat
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                                        <nav aria-label="Page navigation example">
 
+                                                {{ $data->links('pagination::bootstrap-4') }}
+
+
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
 
 
                         </div>
