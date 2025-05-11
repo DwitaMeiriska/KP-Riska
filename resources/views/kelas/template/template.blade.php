@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title> Admin Dachboard</title><!--begin::Primary Meta Tags-->
+    <title>Siswa | Dashboard </title><!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="title" content="Admin | Dashboard ">
     <meta name="author" content="ColorlibHQ">
@@ -64,8 +64,8 @@
                 <ul class="navbar-nav">
                     <li class="nav-item"> <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button">
                             <i class="bi bi-list"></i> </a> </li>
-                    <li class="nav-item d-none d-md-block"> <a href="#" class="nav-link">Home</a> </li>
-                    <li class="nav-item d-none d-md-block"> <a href="#" class="nav-link">Contact</a> </li>
+                    <li class="nav-item d-none d-md-block"> <a href="#" class="nav-link">{{Auth::user()->name}}</a> </li>
+                    <li class="nav-item d-none d-md-block"> <a href="#" class="nav-link">{{Auth::user()->email}}</a> </li>
                 </ul> <!--end::Start Navbar Links--> <!----begin::End Navbar Links-->
                 <ul class="navbar-nav ms-auto"> <!--begin::Navbar Search-->
                     <li>
@@ -81,7 +81,7 @@
             <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="./index.html" class="brand-link">
                     <!--begin::Brand Image--> <img src="{{ asset('adminlte/dist/assets/img/AdminLTELogo.png') }}"
                         alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> <!--end::Brand Image-->
-                    <!--begin::Brand Text--> <span class="brand-text fw-light">Admin</span> <!--end::Brand Text-->
+                    <!--begin::Brand Text--> <span class="brand-text fw-light">Siswa</span> <!--end::Brand Text-->
                 </a> <!--end::Brand Link--> </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
             <div class="sidebar-wrapper">
                 <nav class="mt-2"> <!--begin::Sidebar Menu-->
@@ -104,113 +104,58 @@
                                         <p>Dashboard v3</p>
                                     </a> </li>
                             </ul> --}}
-                            <li class="nav-item {{ Request::is('admin/allsurat*') ? 'bg-dark' : '' }}">
-                                <a href="{{ route('admin.allSurat') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-speedometer"></i>
+                            <li class="nav-item {{ Request::is('kelas/dashboard*') ? 'bg-dark' : '' }}"> <a href='{{route('kelas.dashboard')}}' class="nav-link"> <i
+                                        class="nav-icon bi bi-speedometer"></i>
                                     <p>Dashboard</p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item {{ Request::is('admin/template*') ? 'bg-dark' : '' }}">
-                                <a href="{{ route('admin.template') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-envelope"></i>
+                                </a> </li>
+                            <li class="nav-item {{ Request::is('kelas/create*') ? 'bg-dark' : '' }}"> <a href='{{route('kelas.create')}}' class="nav-link"> <i
+                                        class="nav-icon bi bi-envelope"></i>
+                                    <p>Kirim Surat</p>
+                                </a> </li>
+                            {{-- <li class="nav-item {{ Request::is('kelas/riwayat*') ? 'bg-dark' : '' }}"> <a href='{{route('guru.suratMasuk')}}' class="nav-link"> <i
+                                        class="nav-icon bi bi-envelope"></i>
+                                    <p>Riwayat Surat</p>
+                                </a> </li> --}}
+                            {{-- <li class="nav-item {{ Request::is('guru/kelas*') ? 'bg-dark' : '' }}"> <a href='{{route('guru.kelas')}}' class="nav-link"> <i
+                                        class="nav-icon bi bi-house"></i>
+                                    <p>Kelas</p>
+                                </a> </li> --}}
+                        </li>
+                            {{-- <li class="nav-item {{ Request::is('admin/template*') ? 'bg-dark' : '' }}"> <a href={{ route('admin.template') }} class="nav-link"> <i
+                                        class="nav-icon bi bi-envelope"></i>
                                     <p>Surat Masuk</p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item {{ Request::is('admin/keluar*') ? 'bg-dark' : '' }}">
-                                <a href="{{ route('admin.keluar') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-envelope"></i>
-                                    <p>Surat Keluar</p>
-                                </a>
-                            </li>
-                            <li class="nav-item {{ Request::is('admin/suratIzin*') ? 'bg-dark' : '' }}">
-                                <a href="{{ route('admin.suratIzin') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-envelope"></i>
-                                    <p>Surat Izin Siswa</p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item {{ Request::is('user*') ? 'bg-dark' : '' }}">
-                                <a href="{{ route('user') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-people"></i>
+                                </a> </li>
+                            <li class="nav-item {{ Request::is('admin/keluar*') ? 'bg-dark' : '' }}"> <a href='{{route('admin.keluar')}}' class="nav-link"> <i
+                                        class="nav-icon bi bi-envelope"></i>
+                                    <p>Surat keluar</p>
+                                </a> </li>
+                            <li class="nav-item {{ Request::is('user*') ? 'bg-dark' : '' }}"> <a href='{{route('user')}}' class="nav-link"> <i
+                                        class="nav-icon bi bi-people"></i>
                                     <p>Manajemen User</p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item {{ Request::is('admin/guru*') ? 'bg-dark' : '' }}">
-                                <a href="{{ route('admin.guru') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-person"></i>
-                                    <p>Manajemen Guru</p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item {{ Request::is('admin/profile*') ? 'bg-dark' : '' }} {{ Request::is('admin/kepalasekolah*') ? 'bg-dark' : '' }}">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon bi bi-speedometer"></i>
+                                </a> </li> --}}
+                            {{-- <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-box-seam-fill"></i>
                                     <p>
-                                        Manajemen Profil
+                                        Widgets
                                         <i class="nav-arrow bi bi-chevron-right"></i>
                                     </p>
                                 </a>
-                                <ul class="nav nav-treeview" style="display: none;"> <!-- Set display ke none untuk tertutup -->
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.editKepala') }}" class="nav-link {{ Request::is('admin/kepalasekolah*') ? 'active' : '' }}"> <!-- Route untuk Kepala Sekolah -->
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>- Kepala Sekolah</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.editProfile') }}" class="nav-link {{ Request::is('admin/profile*') ? 'active' : '' }}"> <!-- Route untuk Sekolah -->
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>- Sekolah</p>
-                                        </a>
-                                    </li>
-                                    {{-- <li class="nav-item">
-                                        <a href="#" class="nav-link"> <!-- Kosongkan route untuk PPDB -->
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>- PPDB</p>
-                                        </a>
-                                    </li> --}}
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.galeri') }}" class="nav-link {{ Request::is('admin/galeri*') ? 'active' : '' }}"> <!-- Route untuk Galeri -->
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>- Galeri</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.artikel') }}" class="nav-link {{ Request::is('admin/artikel*') ? 'active' : '' }}"> <!-- Route untuk Artikel -->
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>- Artikel</p>
-                                        </a>
-                                    </li>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item"> <a href="./widgets/small-box.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                            <p>Small Box</p>
+                                        </a> </li>
+                                    <li class="nav-item"> <a href="./widgets/info-box.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                            <p>info Box</p>
+                                        </a> </li>
+                                    <li class="nav-item"> <a href="./widgets/cards.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                            <p>Cards</p>
+                                        </a> </li>
                                 </ul>
                             </li>
-
-
-                        {{-- <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-box-seam-fill"></i>
-                                <p>
-                                    Widgets
-                                    <i class="nav-arrow bi bi-chevron-right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item"> <a href="./widgets/small-box.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Small Box</p>
-                                    </a> </li>
-                                <li class="nav-item"> <a href="./widgets/info-box.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>info Box</p>
-                                    </a> </li>
-                                <li class="nav-item"> <a href="./widgets/cards.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Cards</p>
-                                    </a> </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-clipboard-fill"></i>
-                                <p>
-                                    Layout Options
-                                    <span class="nav-badge badge text-bg-secondary me-3">6</span> <i class="nav-arrow bi bi-chevron-right"></i>
-                                </p>
+                            <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-clipboard-fill"></i>
+                                    <p>
+                                        Layout Options
+                                        <span class="nav-badge badge text-bg-secondary me-3">6</span> <i class="nav-arrow bi bi-chevron-right"></i>
+                                    </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item"> <a href="./layout/unfixed-sidebar.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
@@ -441,36 +386,22 @@
         sales_chart.render();
     </script> <!--end::Script-->
     <script>
-         $(document).ready(function () {
-        // Destroy datatable dulu kalau sudah pernah diinit
-        if ($.fn.DataTable.isDataTable('#example1')) {
-            $('#example1').DataTable().clear().destroy();
-        }
-
-        $('#example1').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
-            ],
-            responsive: true,
-            paging: true,
-            autoWidth: false,
+        $(function () {
+          $("#example1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+          }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+          $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+          });
         });
-    });
       </script>
-      {{-- <script>
-        $(document).ready(function () {
-            $('#example1').DataTable({
-                responsive: true,
-                lengthChange: true,
-                autoWidth: false,
-                dom: 'Bfrtip',
-                buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
-                ]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        });
-        </script> --}}
 </body><!--end::Body-->
 
 </html>

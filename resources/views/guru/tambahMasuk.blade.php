@@ -89,7 +89,7 @@
             </div>
             <div class="col-12">
                 <div class="card">
-                    
+
 
                     <div class="card-body">
                         <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
@@ -183,7 +183,7 @@
                                                     {{-- <td>{{ ucfirst($surat->acc) }}</td> --}}
 
                                                     </td>
-                                                    <td><a href="{{ route('surat.lihat', $surat->id_surat) }}">
+                                                    <td><a href="{{ route('guru.lihat', $surat->id_surat) }}">
                                                             <button class="btn btn-sm btn-primary">Lihat</button>
                                                         </a></td>
                                                 </tr>

@@ -24,6 +24,7 @@
                 <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
                 <option value="guru" {{ $user->role == 'guru' ? 'selected' : '' }}>Guru</option>
                 <option value="kepala" {{ $user->role == 'kepala' ? 'selected' : '' }}>Kepala</option>
+                <option value="kelas" {{ $user->role == 'kelas' ? 'selected' : '' }}>Siswa</option>
                 <!-- Tambahkan role lainnya sesuai kebutuhan -->
             </select>
         </div>

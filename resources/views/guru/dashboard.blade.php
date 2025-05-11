@@ -171,7 +171,7 @@
                                                     <td>{{ $surat->no_surat }}</td>
                                                     <td>{{ $surat->status }}</td>
                                                     <td>{{ $surat->jenis_surat }}</td>
-                                                    <td><a href="{{ route('surat.lihat', $surat->id_surat) }}">
+                                                    <td><a href="{{ route('guru.lihat', $surat->id_surat) }}">
                                                         <button class="btn btn-sm btn-primary">Lihat</button>
                                                     </a></td>
                                                     <td>

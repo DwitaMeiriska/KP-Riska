@@ -79,6 +79,8 @@ Route::middleware(['auth', 'role:kepala'])->group(function () {
 //kelas routes
 Route::middleware(['auth', 'role:kelas'])->group(function () {
     Route::get('/kelas/dashboard', [KelasController::class, 'dashboard'])->name('kelas.dashboard');
+    Route::get('/kelas/create', [KelasController::class, 'create'])->name('kelas.create');
+    Route::post('/kelas/store', [KelasController::class, 'store'])->name('kelas.store');
 });
 
 //instansi routes

@@ -9,6 +9,7 @@ use App\Models\Surat;
 use App\Models\SuratIzin;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class GuruController extends Controller
 {
@@ -201,6 +202,15 @@ public function tambahKelas(){
     public function storeSiswa(Request $request){
 
         $data = Kelas::create($request->all());
+        $nisn = $request->nisn;
+        $siswa = User::create([
+            'name' => $request->name,
+            // 'nisn' => $request->nisn,
+            'email' => $nisn."_".$request->kelas. '@gmail.com',
+            'password' => Hash::make($nisn."123"),
+            // 'kelas' => $request->kelas,
+            'role' => 'kelas',
+        ]);
         return redirect()->route('guru.kelas')->with('success', 'Data Kelas Berhasil');
     }
 
@@ -243,7 +253,7 @@ public function editKelas($id){
             // 'tujuan' => 'required|string|max:50',
             'tanggal_surat' => 'required|date',
             'no_surat' => 'required|string|max:100',
-            'file_surat' => 'required|file|mimes:pdf,doc,docx', // Tipe file yang diizinkan
+            'file_surat' => 'required|file|mimes:pdf,doc,docx,jpg,png,jpeg', // Tipe file yang diizinkan
         ]);
 
         // Dapatkan informasi file yang diunggah

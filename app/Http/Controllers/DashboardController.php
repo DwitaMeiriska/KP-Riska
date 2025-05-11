@@ -24,7 +24,10 @@ class DashboardController extends Controller
     {
         return view('dashboard/createSurat');
     }
-
+    public function getSurat()
+    {
+        return view('dashboard/createSurat');
+    }
     public function suratStore(Request $request)
     {
         // Validasi input form

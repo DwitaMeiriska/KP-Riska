@@ -126,7 +126,7 @@
     <td>{{ $user->id }}</td>
     <td>{{ $user->name }}</td>
     <td>{{ $user->email }}</td>
-    <td>{{ $user->role }}</td>
+    <td>{{ ucfirst($user->role == 'kelas' ? 'Siswa' : $user->role) }}</td>
     <td>
         <a href="{{ route('user.edit', $user->id) }}" class="btn btn-sm btn-warning">Edit</a>
         <form action="{{ route('user.destroy', $user->id) }}" method="POST" style="display:inline;">

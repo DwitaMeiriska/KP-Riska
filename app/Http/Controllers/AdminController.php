@@ -670,9 +670,7 @@ public function updateKepala(Request $request)
 // Surat izin siswa
 public function suratIzin()
 {
-    $data = SuratIzin::whereHas('surat', function ($query) {
-        $query->where('user_id', auth()->user()->id);
-    })->with('surat')->paginate(10);
+    $data = SuratIzin::with('surat')->paginate(10);
 
     $totalSurat = SuratIzin::count(); // Total surat izin
 
