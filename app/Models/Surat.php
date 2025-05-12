@@ -35,4 +35,13 @@ class Surat extends Model
 {
     return $this->hasOne(Guru::class, 'user_id', 'user_id');
 }
+    public function acc()
+    {
+        return $this->hasOne(Acc::class, 'acc', 'id_surat');
+    }
+    public function accAlasan()
+{
+    return $this->hasOne(Acc::class, 'acc');
+}
+
 }

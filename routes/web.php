@@ -104,6 +104,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/surat/{id}/edit', [AdminController::class, 'edit'])->name('surat.edit');
     Route::put('/surat/{id}', [AdminController::class, 'update'])->name('surat.update');
     Route::delete('/surat/{id}', [AdminController::class, 'destroy'])->name('surat.delete');
+    Route::post('/surat/{id}/acc-alasan', [AdminController::class, 'accAlasan'])->name('surat.accAlasan');
+
 
 
     //user

@@ -12,7 +12,7 @@
 
                 <script>
                     // Setelah 5 detik, alert akan otomatis menghilang
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $('#success-alert').alert('close');
                     }, 5000); // 5000ms = 5 detik
                 </script>
@@ -117,48 +117,45 @@
                                                     rowspan="1" colspan="1"
                                                     aria-label="ID Surat: activate to sort column descending"
                                                     aria-sort="ascending">ID Surat</th> --}}
-                                                <th class="sorting" tabindex="0" aria-controls="example1"
-                                                    rowspan="1" colspan="1"
-                                                    aria-label="Kode Surat: activate to sort column ascending">Kode Surat
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1" aria-label="Kode Surat: activate to sort column ascending">
+                                                    Kode Surat
                                                 </th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1"
-                                                    rowspan="1" colspan="1"
-                                                    aria-label="Judul: activate to sort column ascending">Judul
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1" aria-label="Judul: activate to sort column ascending">Judul
                                                 </th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1"
-                                                    rowspan="1" colspan="1"
-                                                    aria-label="Tujuan: activate to sort column ascending">Tujuan
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1" aria-label="Tujuan: activate to sort column ascending">
+                                                    Tujuan
                                                 </th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1"
-                                                    rowspan="1" colspan="1"
-                                                    aria-label="Pengirim: activate to sort column ascending">Pengirim
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1" aria-label="Pengirim: activate to sort column ascending">
+                                                    Pengirim
                                                 </th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1"
-                                                    rowspan="1" colspan="1"
-                                                    aria-label="User: activate to sort column ascending">User
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1" aria-label="User: activate to sort column ascending">User
                                                 </th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1"
-                                                    rowspan="1" colspan="1"
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1"
                                                     aria-label="Tanggal Surat: activate to sort column ascending">Tanggal
                                                     Surat</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1"
-                                                    rowspan="1" colspan="1"
-                                                    aria-label="No Surat: activate to sort column ascending">No Surat</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1"
-                                                    rowspan="1" colspan="1"
-                                                    aria-label="Status: activate to sort column ascending">Status</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1"
-                                                    rowspan="1" colspan="1"
-                                                    aria-label="Jenis Surat: activate to sort column ascending">Jenis Surat</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1"
-                                                    rowspan="1" colspan="1"
-                                                    aria-label="ACC: activate to sort column ascending">ACC</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1"
-                                                    rowspan="1" colspan="1"
-                                                    aria-label="File: activate to sort column ascending">File</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1"
-                                                    rowspan="1" colspan="1"
-                                                    aria-label="Aksi: activate to sort column ascending">Aksi</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1" aria-label="No Surat: activate to sort column ascending">No
+                                                    Surat</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1" aria-label="Status: activate to sort column ascending">
+                                                    Status</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1" aria-label="Jenis Surat: activate to sort column ascending">
+                                                    Jenis Surat</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1" aria-label="ACC: activate to sort column ascending">ACC</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1" aria-label="File: activate to sort column ascending">File
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1" aria-label="Aksi: activate to sort column ascending">Aksi
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -175,15 +172,73 @@
                                                     <td>{{ ucfirst($surat->status) }}</td>
                                                     <td>{{ ucfirst($surat->jenis_surat)}}</td>
                                                     {{-- <td>{{ ucfirst($surat->acc) }}</td> --}}
-                                                    <td>
-                                                    <form action="{{ route('surat.toggleAcc', $surat->id_surat) }}" method="POST" >
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <button type="submit" class="btn btn-sm btn-{{ $surat->acc == 'acc' ? 'success' : 'danger' }}">
-                                                            {{ ucfirst($surat->acc) }}
-                                                        </button>
-                                                    </form>
-                                                    </td>
+                                                    {{-- <td>
+                                                        <form action="{{ route('surat.toggleAcc', $surat->id_surat) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button type="submit"
+                                                                class="btn btn-sm btn-{{ $surat->acc == 'acc' ? 'success' : 'danger' }}">
+                                                                {{ ucfirst($surat->acc) }}
+                                                            </button>
+                                                        </form>
+                                                    <td> --}}
+                                                        <td>
+    @if($surat->acc == 'ya')
+        <span
+            class="badge badge-success"
+            data-toggle="modal"
+            data-target="#modalLihatAlasan{{ $surat->id_surat }}"
+            style="cursor: pointer;"
+            title="Klik untuk melihat alasan"
+        ><div class="btn btn-primary">ACC</div></span>
+
+        <!-- Modal untuk melihat alasan -->
+        <div class="modal fade" id="modalLihatAlasan{{ $surat->id_surat }}" tabindex="-1" role="dialog" aria-labelledby="lihatAlasanLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Alasan ACC</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{ $surat->accAlasan->alasan ?? 'Tidak ada alasan tersedia.' }}
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @else
+        <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modalAcc{{ $surat->id_surat }}">ACC</button>
+
+        <!-- Modal isi alasan -->
+        <div class="modal fade" id="modalAcc{{ $surat->id_surat }}" tabindex="-1" role="dialog" aria-labelledby="accModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <form method="POST" action="{{ route('surat.accAlasan', $surat->id_surat) }}">
+                    @csrf
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Isi Alasan ACC</h5>
+                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <textarea name="alasan" class="form-control" placeholder="Tuliskan alasan ACC" required></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    @endif
+</td>
+
+
                                                     <td><a href="{{ route('surat.lihat', $surat->id_surat) }}">
                                                             <button class="btn btn-sm btn-primary">Lihat</button>
                                                         </a></td>
@@ -245,7 +300,7 @@
                                     <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
                                         <nav aria-label="Page navigation example">
 
-                                                {{ $data->links('pagination::bootstrap-4') }}
+                                            {{ $data->links('pagination::bootstrap-4') }}
 
 
                                         </nav>

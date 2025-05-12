@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Acc;
 use App\Models\Guru;
 use App\Models\Kelas;
 use App\Models\Surat;
@@ -30,7 +31,7 @@ class AdminController extends Controller
         // $totalSuratMasuk = Surat::where('status', 'masuk')->count(); // Total surat keluar
         $latest = Surat::where('status', 'masuk')->orderBy('tanggal_surat', 'desc')->first(); // Tanggal surat masuk terbaru
         $oldest = Surat::where('status', 'masuk')->orderBy('tanggal_surat', 'asc')->first(); // Tanggal surat masuk terlama
-        $data = Surat::paginate(10);
+        $data = Surat::with('acc')->paginate(10);
         return view('admin/dashboard', compact('data', 'totalSurat', 'latest', 'oldest'));
     }
     public function index()
@@ -50,6 +51,29 @@ class AdminController extends Controller
 
     return redirect()->back()->with('success', 'Status acc berhasil diubah.');
 }
+public function accAlasan(Request $request, $id)
+{
+    $request->validate([
+        'alasan' => 'required|string|max:255',
+    ]);
+
+    $surat = Surat::findOrFail($id);
+    // dd($surat->id_surat);
+    // Simpan alasan ke tabel accs
+    $acc=Acc::create([
+        'acc' => $surat->id_surat,
+        'alasan' => $request->alasan,
+    ]);
+    // dd($acc);
+
+    // Update status acc
+    $surat->update([
+        'acc' => 'ya',
+    ]);
+
+    return redirect()->back()->with('success', 'Surat berhasil di-ACC dengan alasan.');
+}
+
 
     public function suratKeluar()
     {
