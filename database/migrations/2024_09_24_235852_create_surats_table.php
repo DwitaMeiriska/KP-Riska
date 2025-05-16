@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('jenis_surat'); // Kolom no_surat
             $table->string('file_surat'); // Kolom untuk menyimpan file surat (misalnya path file)
             $table->enum('status', ['masuk', 'keluar']); // Enum untuk status (masuk/keluar)
-            $table->enum('acc', ['ya', 'tidak'])->default('tidak'); // Enum untuk status acc (ya/tidak)
+            $table->enum('acc', ['ya','belum','tidak'])->default('belum'); // Enum untuk status acc (ya/tidak)
             $table->timestamps(); // created_at dan updated_at
         });
     }

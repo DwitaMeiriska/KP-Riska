@@ -50,9 +50,8 @@ class GuruController extends Controller
     public function tambahSuratIzin()
     {
         $kelas = Kelas::with('guru')->where('guru_id', auth()->user()->id)->get();
-        // dd($kelas);
-        return view("guru.tambahSuratIzin",compact('kelas'));
-
+        dd($kelas);
+        // return view("guru.tambahSuratIzin",compact('kelas'));
     }
     public function suratIzin()
     {
@@ -115,7 +114,7 @@ class GuruController extends Controller
             'jenis_surat' => $request->jenis_surat,
             'file_surat' => 'surat_files/' . $fileName, // Simpan path file yang diupload
             'status' => "masuk",
-            'acc' => "tidak",
+            'acc' => "belum",
         ]);
 
         $id_surat = $surat->id_surat;

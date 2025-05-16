@@ -35,7 +35,7 @@ class KelasController extends Controller
         $nisn = auth()->user()->email;
         $nisnFix =  explode('_', $nisn)[0];
         $data = SuratIzin::where('nisn', $nisnFix)->join('surats', 'surat_izins.id_surat', '=', 'surats.id_surat')->first();
-        // dd($data);
+        // dd($nisnFix);
         return view('kelas.create', compact('data'));
     }
 
@@ -77,7 +77,7 @@ class KelasController extends Controller
             'jenis_surat' => "izin_sekolah",
             'file_surat' => 'surat_files/' . $filename, // Simpan path file yang diupload
             'status' => "masuk",
-            'acc' => "tidak",
+            'acc' => "belum",
         ]);
         $id_surat = $surat->id_surat;
     // Simpan data surat

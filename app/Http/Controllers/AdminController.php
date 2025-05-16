@@ -46,7 +46,7 @@ class AdminController extends Controller
     public function toggleAcc($id_surat)
 {
     $surat = Surat::where('id_surat', $id_surat)->firstOrFail();
-    $surat->acc = ($surat->acc === 'ya') ? 'tidak' : 'ya';
+    $surat->acc = 'ya';
     $surat->save();
 
     return redirect()->back()->with('success', 'Status acc berhasil diubah.');
@@ -68,7 +68,7 @@ public function accAlasan(Request $request, $id)
 
     // Update status acc
     $surat->update([
-        'acc' => 'ya',
+        'acc' => 'tidak',
     ]);
 
     return redirect()->back()->with('success', 'Surat berhasil di-ACC dengan alasan.');
@@ -140,6 +140,7 @@ public function accAlasan(Request $request, $id)
             'jenis_surat' => $request->jenis_surat,
             'file_surat' => 'surat_files/' . $fileName, // Simpan path file yang diupload
             'status' => "masuk",
+            'acc'=>"belum"
         ]);
 
         // Redirect setelah berhasil disimpan
@@ -756,7 +757,7 @@ public function lihatSuratIzin($id)
             'jenis_surat' => $request->jenis_surat,
             'file_surat' => 'surat_files/' . $fileName, // Simpan path file yang diupload
             'status' => "masuk",
-            'acc' => "tidak",
+            'acc' => "belum",
         ]);
 
         $id_surat = $surat->id_surat;

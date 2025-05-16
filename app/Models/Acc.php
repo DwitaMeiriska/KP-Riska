@@ -20,6 +20,6 @@ class Acc extends Model
      */
     public function surat()
 {
-    return $this->belongsTo(Surat::class, 'surat_id');
+    return $this->hasOne(Surat::class, 'surat_id');
 }
 }

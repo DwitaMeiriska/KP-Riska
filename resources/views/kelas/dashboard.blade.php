@@ -27,7 +27,7 @@
                 <table class="table table-bordered table-striped">
                     <thead class="thead-dark">
                         <tr>
-                            <th>ID Surat</th>
+                            <th>No</th>
                             <th>Nama Siswa</th>
                             <th>NISN</th>
                             <th>Kelas</th>
@@ -38,9 +38,12 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $n=1;
+                        @endphp
                         @forelse ($data as $surat)
                             <tr>
-                                <td>{{ $surat->id_surat }}</td>
+                                <td>{{ $n++}}</td>
                                 <td>{{ $surat->nama_siswa }}</td>
                                 <td>{{ $surat->nisn }}</td>
                                 <td>{{ $surat->kelas }}</td>

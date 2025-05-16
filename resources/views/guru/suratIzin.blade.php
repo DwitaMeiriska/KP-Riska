@@ -135,6 +135,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <p>{{$data}}</p>
                                         @foreach ($data as $surat)
                                             <tr>
                                                 <td>{{ $surat->nama_siswa }}</td>

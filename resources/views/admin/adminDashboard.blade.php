@@ -184,21 +184,28 @@
                                                         </form>
                                                     <td> --}}
                                                         <td>
-    @if($surat->acc == 'ya')
+                                                                @if ($surat->acc == "ya")
+                                                                <button>IYA</button>
+
+                                                                @endif
+
+    @if($surat->acc == 'tidak' && optional($surat->accAlasan)->alasan != null )
         <span
             class="badge badge-success"
             data-toggle="modal"
             data-target="#modalLihatAlasan{{ $surat->id_surat }}"
             style="cursor: pointer;"
             title="Klik untuk melihat alasan"
-        ><div class="btn btn-primary">ACC</div></span>
+        >
+        {{-- <div class="btn btn-primary">TIdak</div></span> --}}
+        <p style="color:black">{{optional($surat->accAlasan)->alasan}}</p>
 
         <!-- Modal untuk melihat alasan -->
         <div class="modal fade" id="modalLihatAlasan{{ $surat->id_surat }}" tabindex="-1" role="dialog" aria-labelledby="lihatAlasanLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Alasan ACC</h5>
+                        <h5 class="modal-title">Alasan Tidak ACC</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -212,8 +219,18 @@
                 </div>
             </div>
         </div>
-    @else
-        <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modalAcc{{ $surat->id_surat }}">ACC</button>
+    @endif
+    @if ($surat->acc=="belum")
+        <form action="{{ route('surat.toggleAcc', $surat->id_surat) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button type="submit"
+                                                                class="btn btn-sm btn-primary">
+                                                                ACC
+                                                            </button>
+                                                        </form>
+        <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modalAcc{{ $surat->id_surat }}">belum</button>
 
         <!-- Modal isi alasan -->
         <div class="modal fade" id="modalAcc{{ $surat->id_surat }}" tabindex="-1" role="dialog" aria-labelledby="accModalLabel" aria-hidden="true">
@@ -222,11 +239,11 @@
                     @csrf
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Isi Alasan ACC</h5>
+                            <h5 class="modal-title">Isi Alasan tidak ACC</h5>
                             <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                         </div>
                         <div class="modal-body">
-                            <textarea name="alasan" class="form-control" placeholder="Tuliskan alasan ACC" required></textarea>
+                            <textarea name="alasan" class="form-control" placeholder="Tuliskan alasan tidak ACC" required></textarea>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Simpan</button>
@@ -236,6 +253,7 @@
             </div>
         </div>
     @endif
+
 </td>
 
 
