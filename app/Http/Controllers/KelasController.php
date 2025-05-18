@@ -12,117 +12,99 @@ use Illuminate\Http\Request;
 class KelasController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan dashboard siswa.
      */
-    public function dashboard(){
-        $nisn = auth()->user()->email;
-        $nisnFix =  explode('_', $nisn)[0];
-        // $data = SuratIzin::where('nisn', $nisn)->get();
-        $data = SuratIzin::where('nisn', $nisnFix)->get();
-        // dd($data);
-        return view('kelas.dashboard', compact('data'));
-      }
-    public function index()
+    public function dashboard()
     {
+        $nisn = auth()->user()->email;
+        $nisnFix = explode('_', $nisn)[0];
 
+        $data = SuratIzin::where('nisn', $nisnFix)->get();
+        return view('kelas.dashboard', compact('data'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Tampilkan form input surat izin.
      */
     public function create()
     {
-        $nisn = auth()->user()->email;
-        $nisnFix =  explode('_', $nisn)[0];
-        $data = SuratIzin::where('nisn', $nisnFix)->join('surats', 'surat_izins.id_surat', '=', 'surats.id_surat')->first();
-        // dd($nisnFix);
+        $nisn = explode('_', auth()->user()->email)[0];
+        $data = Kelas::where('nisn', $nisn)->first();
+
+        if (!$data) {
+            return redirect()->back()->with('error', 'Data siswa tidak ditemukan.');
+        }
+
         return view('kelas.create', compact('data'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Simpan surat izin baru ke database.
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-         // Validasi input
-    $request->validate([
-        'nama_siswa' => 'required|string|max:100',
-        'nisn' => 'required|string|max:30',
-        'kelas' => 'required|string|max:10',
-        'keterangan' => 'required|string',
-        'status' => 'required',
-        'lampiran' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:2048',
-    ]);
-    $noSurat = "000";
-    $date = now()->format('Y-m-d');
-    // Upload file surat
-    if ($request->hasFile('lampiran')) {
-        $file = $request->file('lampiran');
-        $filename = 'surat_' . time() . '_' . Str::random(5) . '.' . $file->getClientOriginalExtension();
-        // $filepath = $file->storeAs('surat_files', $filename, 'public');
-        $filepath = $file->move(public_path('surat_files'), $filename);
-    } else {
-        $filepath = null;
-    }
-    $guru = Guru::with('user')->where('user_id', $request->user_id)->first();
-    $surat = Surat::create([
-            'user_id' => $request->user_id,
-            'kode_surat' => "Izin",
-            'judul' => $request->judul,
-            'tujuan' => $guru->user->name,
-            'pengirim' => $request->nama_siswa,
-            'tanggal_surat' => $date,
-            'no_surat' => $noSurat,
-            'jenis_surat' => "izin_sekolah",
-            'file_surat' => 'surat_files/' . $filename, // Simpan path file yang diupload
-            'status' => "masuk",
-            'acc' => "belum",
+        // Validasi input
+        $request->validate([
+            'nama_siswa' => 'required|string|max:100',
+            'nisn'       => 'required|string|max:30',
+            'kelas'      => 'required|string|max:10',
+            'judul'      => 'required|string|max:255',
+            'keterangan' => 'required|string',
+            'status'     => 'required',
+            'lampiran'   => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:2048',
         ]);
-        $id_surat = $surat->id_surat;
-    // Simpan data surat
-    SuratIzin::create([
-        'nama_siswa' => $request->nama_siswa,
-        'nisn' => $request->nisn,
-        'kelas' => $request->kelas,
-        'keterangan' => $request->keterangan,
-        'status' => $request->status,
-        'lampiran' =>'surat_files/' . $filename,
-        'id_surat' => $id_surat, // jika belum auto increment, sesuaikan kebutuhan
-    ]);
 
-    return redirect()->back()->with('success', 'Surat izin berhasil ditambahkan.');
+        // Ambil ID user yang login
+        $userId = auth()->id();
+        $date   = now()->format('Y-m-d');
+        $noSurat = "000";
+
+        // Upload file
+        $filename = null;
+        if ($request->hasFile('lampiran')) {
+            $file = $request->file('lampiran');
+            $filename = 'surat_' . time() . '_' . Str::random(5) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('surat_files'), $filename);
+        }
+
+        // Ambil guru berdasarkan user_id (relasi)
+        $guru = Guru::with('user')->where('user_id', $userId)->first();
+        if (!$guru || !$guru->user) {
+            return redirect()->back()->with('error', 'Data guru atau user tidak ditemukan.');
+        }
+
+        // Simpan ke tabel Surat
+        $surat = Surat::create([
+            'user_id'       => $userId,
+            'kode_surat'    => "Izin",
+            'judul'         => $request->judul,
+            'tujuan'        => $guru->user->name,
+            'pengirim'      => $request->nama_siswa,
+            'tanggal_surat' => $date,
+            'no_surat'      => $noSurat,
+            'jenis_surat'   => "izin_sekolah",
+            'file_surat'    => $filename ? 'surat_files/' . $filename : null,
+            'status'        => "masuk",
+            'acc'           => "belum",
+        ]);
+
+        // Simpan ke tabel SuratIzin
+        SuratIzin::create([
+            'nama_siswa' => $request->nama_siswa,
+            'nisn'       => $request->nisn,
+            'kelas'      => $request->kelas,
+            'keterangan' => $request->keterangan,
+            'status'     => $request->status,
+            'lampiran'   => $filename ? 'surat_files/' . $filename : null,
+            'id_surat'   => $surat->id_surat,
+        ]);
+
+        return redirect()->back()->with('success', 'Surat izin berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+    public function index() { /* Kosong */ }
+    public function show(string $id) { /* Kosong */ }
+    public function edit(string $id) { /* Kosong */ }
+    public function update(Request $request, string $id) { /* Kosong */ }
+    public function destroy(string $id) { /* Kosong */ }
 }

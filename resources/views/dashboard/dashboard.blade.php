@@ -10,15 +10,15 @@
 
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="https://naevaschool.naevaweb.my.id/userfiles/uploads/bg-edukasi-45.jpg" class="d-block w-100 rounded"
+                <img src="{{ asset('file/depan.png') }}" class="d-block w-100 rounded"
                     alt="..." style="max-height: 400px; object-fit: cover;">
             </div>
             <div class="carousel-item">
-                <img src="https://naevaschool.naevaweb.my.id/userfiles/uploads/bg-edukasi-76.jpg" class="d-block w-100 rounded"
+                <img src="{{ asset('file/foto-depan.jpg') }}" class="d-block w-100 rounded"
                     alt="..." style="max-height: 400px; object-fit: cover;">
             </div>
             <div class="carousel-item">
-                <img src="https://naevaschool.naevaweb.my.id/userfiles/uploads/bg-edukasi-86.jpg" class="d-block w-100 rounded"
+                <img src="{{ asset('file/taman.png') }}"class="d-block w-100 rounded"
                     alt="..." style="max-height: 400px; object-fit: cover;">
             </div>
         </div>
@@ -65,19 +65,14 @@
     <div class="container py-5">
         <div class="row py-3">
             <div class="col-lg-7 mb-4">
-                <h1>SD IT Naevaweb School</h1>
-                <h4>Menjadi Sekolah yang menyenangkan bagi siswa</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur</p>
-                {{-- <p><button type="button" class="btn btn-dark">Info PPDB</button>
-                     <a href="{{ route('profiles') }}"><button type="button"
-                        class="btn btn-outline-dark">Profil Sekolah</button></a></p> --}}
+                <h1>SMAN 11 KOTA BENGKULU</h1>
+                <h4>visi</h4>
+                <p>Menghasilkan lulusan yang beriman dan bertaqwa, berkarakter dan berkompeten yang didasari ilmu pengetahuan teknologi berwawasan global </p>
+                <p><button type="button" class="btn btn-dark">Info PPDB</button> <button type="button"
+                        class="btn btn-outline-dark">Profil Sekolah</button></p>
             </div>
             <div class="col-lg-5 mb-4">
-                <img src="https://naevaschool.naevaweb.my.id/userfiles/uploads/bg-edukasi-246.jpg"
-                    class="d-block w-100 rounded" alt="...">
+                <img src="{{ asset('file/logo-sma.png') }}" class="d-block w-50 rounded mx-auto" alt="Logo SMA">
             </div>
         </div>
     </div>
@@ -87,32 +82,28 @@
                 <div class="bg-light text-dark border text-center p-3 p-xl-4 rounded">
                     <div class="pb-3"><i class="fas fa-trophy fa-3x"></i></div>
                     <div class="h5 text-uppercase pb-2">Berprestasi</div>
-                    <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua. </div>
+                    <div>Kami percaya, setiap siswa memiliki potensi besar untuk berprestasi dan membawa perubahan positif. </div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 mb-3 mb-lg-4">
                 <div class="bg-light text-dark border text-center p-3 p-xl-4 rounded">
                     <div class="pb-3"><i class="fas fa-award fa-3x"></i></div>
-                    <div class="h5 text-uppercase pb-2">Terakreditasi A</div>
-                    <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua. </div>
+                    <div class="h5 text-uppercase pb-2">Terakreditasi B</div>
+                    <div>ke lingkungan yang membentuk karakter, mengasah potensi, dan membuka peluang. </div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 mb-3 mb-lg-4">
                 <div class="bg-light text-dark border text-center p-3 p-xl-4 rounded">
                     <div class="pb-3"><i class="fas fa-microscope fa-3x"></i></div>
                     <div class="h5 text-uppercase pb-2">Modern</div>
-                    <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua. </div>
+                    <div>Upgrade Dirimu Bareng Kami — SMA yang Siap Bersaing di Era Digital. </div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 mb-3 mb-lg-4">
                 <div class="bg-light text-dark border text-center p-3 p-xl-4 rounded">
                     <div class="pb-3"><i class="fas fa-shapes fa-3x"></i></div>
                     <div class="h5 text-uppercase pb-2">Ekstrakurikuler</div>
-                    <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua. </div>
+                    <div>Temukan versi terbaik dirimu lewat kegiatan seru dan bermakna di ekskul!. </div>
                 </div>
             </div>
         </div>
@@ -221,7 +212,7 @@
     <div class="py-2">
         <div class="container text-center bg-success text-white py-5">
             <div class="fs-2 mb-3">Segera Daftar!</div>
-            <p>Penerimaan Peserta Didik Baru (PPDB) Sekolah Naevaweb Tahun Pelajaran 2024-2025</p>
+            <p>Penerimaan Peserta Didik Baru (PPDB) Sekolah Naevaweb Tahun Pelajaran 2025-2026</p>
             <div class="pt-2">
                 <button type="button" class="btn btn-outline-light me-2">Info Lebih Lanjut</button>
                 <button type="button" class="btn btn-outline-light">Daftar Sekarang</button>
