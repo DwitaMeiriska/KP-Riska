@@ -170,7 +170,7 @@
                                                     <td>{{ $surat->tanggal_surat }}</td>
                                                     <td>{{ $surat->no_surat }}</td>
                                                     <td>{{ ucfirst($surat->status) }}</td>
-                                                    <td>{{ ucfirst($surat->jenis_surat)}}</td>
+                                                    <td>{{ str_replace('_', ' ', ucfirst($surat->jenis_surat)) }}</td>
                                                     {{-- <td>{{ ucfirst($surat->acc) }}</td> --}}
                                                     {{-- <td>
                                                         <form action="{{ route('surat.toggleAcc', $surat->id_surat) }}"

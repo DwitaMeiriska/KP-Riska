@@ -3,7 +3,7 @@
 @section('content')
 <div class="container py-5">
     <!-- Header Image -->
-    <div class="jumbotron text-white text-center" style="background: url('/path/to/your/school-image.jpg') center center/cover no-repeat; padding: 5rem 1rem;">
+    <div class="jumbotron text-white text-center" style="background: url('{{ asset('/profile/banner.png') }}') center center/cover no-repeat; padding: 5rem 1rem;">
         <h1 class="display-4 fw-bold">{{ $profile->nama_sekolah ?? 'Nama Sekolah' }}</h1>
         <p class="lead">{{ $profile->deskripsi ?? 'Deskripsi singkat sekolah yang bisa menarik perhatian pengunjung.' }}</p>
     </div>

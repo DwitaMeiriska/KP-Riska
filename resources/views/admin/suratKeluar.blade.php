@@ -175,7 +175,8 @@
                                                     <td>{{ $surat->tanggal_surat }}</td>
                                                     <td>{{ $surat->no_surat }}</td>
                                                     <td>{{ $surat->status }}</td>
-                                                    <td>{{ $surat->jenis_surat }}</td>
+                                                    {{-- <td>{{ $surat->jenis_surat }}</td> --}}
+                                                    <td>{{ str_replace('_', ' ', ucfirst($surat->jenis_surat)) }}</td>
                                                     <td>
                                                         <form action="{{ route('surat.toggleAcc', $surat->id_surat) }}" method="POST" >
                                                             @csrf

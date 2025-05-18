@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="card card-primary">
-                <button class="btn btn-lg btn-primary col-lg-6 p-3 mt-3" ><h1>Tambah Surat</h1></button>
+                {{-- <button class="btn btn-lg btn-primary col-lg-6 p-3 mt-3" ><h1>Tambah Surat</h1></button> --}}
                 <div class="card-header mt-3">
                     <h3 class="card-title">Tambah Surat Keluar</h3>
                 </div>
