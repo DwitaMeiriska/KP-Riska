@@ -682,8 +682,8 @@ public function updateKepala(Request $request)
     }
 
     if ($request->hasFile('foto')) {
-        $fotoPath = $request->file('foto')->store('uploads/principal', 'public');
-        $profile->foto = $fotoPath;
+        $fotoPath = $request->file('foto')->move(public_path('profile'), uniqid() . '.' . $request->file('foto')->getClientOriginalExtension());
+        $profile->foto = 'profile/' . basename($fotoPath);
     }
 
     // Update profil kepala sekolah

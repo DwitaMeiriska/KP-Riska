@@ -68,7 +68,7 @@
                 <h1>SMAN 11 KOTA BENGKULU</h1>
                 <h4>visi</h4>
                 <p>Menghasilkan lulusan yang beriman dan bertaqwa, berkarakter dan berkompeten yang didasari ilmu pengetahuan teknologi berwawasan global </p>
-                <p><button type="button" class="btn btn-dark">Info PPDB</button> <button type="button"
+                <p> <button type="button"
                         class="btn btn-outline-dark">Profil Sekolah</button></p>
             </div>
             <div class="col-lg-5 mb-4">
