@@ -182,9 +182,10 @@ class GuruController extends Controller
     $totalSiswa = Kelas::where('guru_id', auth()->user()->id)->count();
 
     $kelas = Kelas::where('guru_id', auth()->user()->id)->first();
-
+    $kelasName = Guru::where('user_id', auth()->user()->id)->first()?->kelas ?? 'Tidak ada kelas tersedia';
+    // dd($kelasname);
     // Check if $kelas is not null before accessing its properties
-    $kelasName = $kelas ? $kelas->kelas : 'Tidak ada kelas tersedia';  // Handle null case
+    // $kelasName = $kelas ? $kelas->kelas : 'Tidak ada kelas tersedia';  // Handle null case
 
     return view('kelas.kelas', compact('data', 'totalSiswa', 'kelasName'));
 }
@@ -193,8 +194,8 @@ public function tambahKelas(){
         $query->where('user_id', auth()->user()->id);
     })->with('surat.guru')->first();
 
-    $name = $data?->surat?->guru?->kelas ?? 'Tidak ada kelas tersedia';
-
+    // $name = $data?->surat?->guru?->kelas ?? 'Tidak ada kelas tersedia';
+    $name = Guru::where('user_id', auth()->user()->id)->first()?->kelas ?? 'Tidak ada kelas tersedia';
     return view('kelas.tambahSiswa', compact('name'));
 }
 
