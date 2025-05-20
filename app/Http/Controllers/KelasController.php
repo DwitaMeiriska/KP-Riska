@@ -29,7 +29,8 @@ class KelasController extends Controller
     public function create()
     {
         $nisn = explode('_', auth()->user()->email)[0];
-        $data = Kelas::where('nisn', $nisn)->first();
+        // $data = Kelas::where('nisn', $nisn)->first();
+        $data = SuratIzin::where('nisn', $nisn)->join('surats', 'surat_izins.id_surat', '=', 'surats.id_surat')->first();
 
         if (!$data) {
             return redirect()->back()->with('error', 'Data siswa tidak ditemukan.');
@@ -51,7 +52,7 @@ class KelasController extends Controller
             'judul'      => 'required|string|max:255',
             'keterangan' => 'required|string',
             'status'     => 'required',
-            'lampiran'   => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:2048',
+            'lampiran'   => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:5048',
         ]);
 
         // Ambil ID user yang login
@@ -68,7 +69,7 @@ class KelasController extends Controller
         }
 
         // Ambil guru berdasarkan user_id (relasi)
-        $guru = Guru::with('user')->where('user_id', $userId)->first();
+        $guru = Guru::with('user')->where('user_id', $request->user_id)->first();
         if (!$guru || !$guru->user) {
             return redirect()->back()->with('error', 'Data guru atau user tidak ditemukan.');
         }
