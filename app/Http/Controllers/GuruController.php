@@ -177,13 +177,13 @@ class GuruController extends Controller
 
     public function kelas()
 {
-    $data = Kelas::where('guru_id', auth()->user()->id)->paginate(10);
+    $data = Kelas::where('guru_id', auth()->user()->id)->with('guru')->paginate(10);
 
     $totalSiswa = Kelas::where('guru_id', auth()->user()->id)->count();
 
     $kelas = Kelas::where('guru_id', auth()->user()->id)->first();
     $kelasName = Guru::where('user_id', auth()->user()->id)->first()?->kelas ?? 'Tidak ada kelas tersedia';
-    // dd($kelasname);
+    // dd($data);
     // Check if $kelas is not null before accessing its properties
     // $kelasName = $kelas ? $kelas->kelas : 'Tidak ada kelas tersedia';  // Handle null case
 

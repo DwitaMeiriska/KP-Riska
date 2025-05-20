@@ -20,7 +20,7 @@ class Kelas extends Model
 
     public function guru()
     {
-        return $this->belongsTo(Guru::class);
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Guru::class, 'guru_id', 'user_id');
+        // return $this->belongsTo(User::class);
     }
 }
