@@ -400,6 +400,39 @@ public function accAlasan(Request $request, $id)
         return redirect()->route('admin.guru')->with('success', 'Guru berhasil ditambahkan');
     }
 
+    public function editGuru($id)
+{
+    $guru = Guru::findOrFail($id);
+    $user = User::where('role', 'guru')->get();
+    return view('admin.editGuru', compact('guru', 'user'));
+}
+
+public function updateGuru(Request $request, $id)
+{
+    $request->validate([
+        'user_id' => 'required|exists:users,id',
+        'nip' => 'required|string|max:100',
+        'kelas' => 'required|string|max:100',
+    ]);
+
+    $guru = Guru::findOrFail($id);
+    $guru->update([
+        'user_id' => $request->user_id,
+        'nip' => $request->nip,
+        'kelas' => $request->kelas
+    ]);
+
+    return redirect()->route('admin.guru')->with('success', 'Data guru berhasil diperbarui.');
+}
+
+public function deleteGuru($id)
+{
+    $guru = Guru::findOrFail($id);
+    $guru->delete();
+    return redirect()->route('admin.guru')->with('success', 'Data guru berhasil dihapus.');
+}
+
+
     public function galeri()
     {
         $galeris = Galeri::paginate(10);

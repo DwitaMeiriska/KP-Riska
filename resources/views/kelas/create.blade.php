@@ -51,7 +51,7 @@
                     </div>
 
                     {{-- Hidden: user_id --}}
-                    <input type="hidden" name="user_id" value="{{ $data->user_id }}">
+                    <input type="hidden" name="user_id" value="{{ $data->guru_id }}">
 
                     {{-- Keterangan --}}
                     <div class="form-group col-md-6">

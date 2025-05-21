@@ -62,7 +62,9 @@ class GuruController extends Controller
             $query->where('user_id', auth()->user()->id);
         })->with('surat.guru')->paginate(10);
 
-        $totalSurat = SuratIzin::count(); // Total surat izin
+        $totalSurat = SuratIzin::whereHas('surat', function ($query) {
+            $query->where('user_id', auth()->user()->id);
+        })->count(); // Total surat izin
 
         // Tanggal surat izin terbaru berdasarkan surat terkait
         $latestIzinMasuk = SuratIzin::with('surat')
@@ -239,9 +241,10 @@ public function editKelas($id){
 
     public function suratMasuk()
     {
-        $data = Surat::where('status', 'masuk')
+        $data = Surat::where('status', 'masuk')->with('acc')
                  ->where('user_id', auth()->user()->id)->where('pengirim', auth()->user()->name)
                  ->paginate(10);
+        // dd($data);
         return view('guru.tambahMasuk',compact('data'));
     }
     public function storeMasuk(Request $request)
@@ -277,6 +280,7 @@ public function editKelas($id){
             'jenis_surat' => $request->jenis_surat,
             'file_surat' => 'surat_files/' . $fileName, // Simpan path file yang diupload
             'status' => "masuk",
+            'acc' => "belum",
         ]);
 
         $data = Surat::where('status', 'masuk')

@@ -158,7 +158,7 @@
                                                     aria-label="No Surat: activate to sort column ascending">No Surat</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1"
                                                     rowspan="1" colspan="1"
-                                                    aria-label="Status: activate to sort column ascending">Status</th>
+                                                    aria-label="ACC: activate to sort column ascending">ACC</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1"
                                                     rowspan="1" colspan="1"
                                                     aria-label="Jenis Surat: activate to sort column ascending">Jenis Surat</th>
@@ -178,7 +178,16 @@
                                                     <td>{{ $surat->user->name ?? 'Tidak ada pengguna' }}</td>
                                                     <td>{{ $surat->tanggal_surat }}</td>
                                                     <td>{{ $surat->no_surat }}</td>
-                                                    <td>{{ ucfirst($surat->status) }}</td>
+                                                    {{-- <td>{{ ucfirst($surat->status) }}</td> --}}
+                                                    <td>
+                                                        @if ($surat->acc == "belum")
+                                                            <span class="badge badge-warning">Belum</span>
+                                                        @elseif ($surat->acc == 'tidak' && optional($surat->accAlasan)->alasan != null )
+                                                            <p>{{$surat->accAlasan->alasan}}</p>
+                                                        @elseif ($surat->acc == "ya")
+                                                            <span class="badge badge-success">Diterima</span>
+                                                        @endif
+                                                    </td>
                                                     <td>{{ ucfirst($surat->jenis_surat)}}</td>
                                                     {{-- <td>{{ ucfirst($surat->acc) }}</td> --}}
 

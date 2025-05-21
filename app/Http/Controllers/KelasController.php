@@ -29,8 +29,8 @@ class KelasController extends Controller
     public function create()
     {
         $nisn = explode('_', auth()->user()->email)[0];
-        // $data = Kelas::where('nisn', $nisn)->first();
-        $data = SuratIzin::where('nisn', $nisn)->join('surats', 'surat_izins.id_surat', '=', 'surats.id_surat')->first();
+        $data = Kelas::where('nisn', $nisn)->first();
+        // $data = SuratIzin::where('nisn', $nisn)->join('surats', 'surat_izins.id_surat', '=', 'surats.id_surat')->first();
 
         if (!$data) {
             return redirect()->back()->with('error', 'Data siswa tidak ditemukan.');
@@ -67,7 +67,7 @@ class KelasController extends Controller
             $filename = 'surat_' . time() . '_' . Str::random(5) . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('surat_files'), $filename);
         }
-
+        // dd($userId);
         // Ambil guru berdasarkan user_id (relasi)
         $guru = Guru::with('user')->where('user_id', $request->user_id)->first();
         if (!$guru || !$guru->user) {

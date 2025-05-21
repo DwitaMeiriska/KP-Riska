@@ -119,7 +119,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/guru',[AdminController::class,'guru'])->name('admin.guru');
     Route::get('/admin/tambahGuru',[AdminController::class,'tambahGuru'])->name('admin.tambahGuru');
     Route::post('/admin/storeguru',[AdminController::class,'storeGuru'])->name("admin.storeGuru");
-
+    Route::get('/admin/guru/edit/{id}', [AdminController::class, 'editGuru'])->name('admin.editGuru');
+Route::post('/admin/guru/update/{id}', [AdminController::class, 'updateGuru'])->name('admin.updateGuru');
+Route::delete('/admin/guru/delete/{id}', [AdminController::class, 'deleteGuru'])->name('admin.deleteGuru');
     //galeri
     Route::get('/admin/galeri',[AdminController::class,'galeri'])->name('admin.galeri');
     Route::get('/admin/tambahGaleri',[AdminController::class,'tambahGaleri'])->name('admin.tambahGaleri');
